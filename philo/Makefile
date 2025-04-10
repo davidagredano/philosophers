@@ -6,7 +6,7 @@ RM := rm -f
 RMDIR := rm -rf
 
 NAME := philo
-SRCS := main.c ft_atoi.c debug.c
+SRCS := main.c ft_atoi.c threads.c debug.c
 BUILD_DIR := build
 OBJS := $(SRCS:%.c=$(BUILD_DIR)/%.o)
 DEPS := $(SRCS:%.c=$(BUILD_DIR)/%.d)

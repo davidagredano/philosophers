@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:08:15 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/10 14:00:48 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:14:42 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,9 @@ int	main(int argc, char *argv[])
 		data_destroy(&data);
 		return (EXIT_FAILURE);
 	}
-	data_print(&data);
+	if (threads_create(&data) != 0)
+		data_destroy(&data);
+	threads_join(&data);
 	data_destroy(&data);
 	return (EXIT_SUCCESS);
 }
