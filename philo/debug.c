@@ -19,7 +19,7 @@ void	philo_print(t_philo *philo)
 	printf("  fork_left: %p\n", philo->fork_left);
 	printf("  fork_right: %p\n", philo->fork_right);
 	printf("  times_eaten: %d\n", philo->times_eaten);
-	printf("  time_of_last_meal: %d\n", philo->time_of_last_meal);
+	printf("  time_of_last_meal: %ld\n", philo->time_of_last_meal);
 }
 
 void	data_print(t_data *data)

@@ -13,10 +13,11 @@
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <pthread.h> // pthread_t
-# include <stdio.h>   // printf
-# include <stdlib.h>  // malloc, free
-# include <string.h>  // memset
+# include <pthread.h>	// pthread_t
+# include <stdio.h>		// printf
+# include <stdlib.h>	// malloc, free
+# include <string.h>	// memset
+# include <sys/time.h>	// gettimeofday
 
 typedef unsigned int	t_uint;
 
@@ -36,7 +37,7 @@ typedef struct s_philo
 	char		*fork_left;
 	char		*fork_right;
 	t_uint		times_eaten;
-	t_uint		time_of_last_meal;
+	long		time_of_last_meal;
 }	t_philo;
 
 typedef struct s_data

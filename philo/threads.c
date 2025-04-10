@@ -12,12 +12,22 @@
 
 #include "philo.h"
 
+static long	timestamp_get(void)
+{
+	struct timeval	timeval;
+
+	if (gettimeofday(&timeval, NULL) != 0)
+		return (-1);
+	return ((timeval.tv_sec * 1000) + (timeval.tv_usec / 1000));
+}
+
 static void	*routine(void *arg)
 {
 	t_philo			*philo;
 
 	philo = (t_philo *)arg;
-	printf("%d has started\n", philo->number);
+	philo->time_of_last_meal = timestamp_get();
+	printf("%ld %d has started\n", philo->time_of_last_meal, philo->number);
 	return (NULL);
 }
 
