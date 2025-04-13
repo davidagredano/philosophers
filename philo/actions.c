@@ -40,6 +40,7 @@ void	philo_eat(t_philo *philo)
 	philo->time_of_last_meal = timestamp_get();
 	printf("%ld %d is eating\n", philo->time_of_last_meal, philo->number);
 	usleep(philo->rules->time_to_eat * 1000);
+	philo->times_eaten++;
 }
 
 void	philo_leave_forks(t_philo *philo)

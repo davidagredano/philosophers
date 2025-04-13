@@ -27,11 +27,14 @@ static void	*routine(void *arg)
 
 	philo = (t_philo *)arg;
 	philo->time_of_last_meal = timestamp_get();
-	philo_think(philo);
-	philo_take_forks(philo);
-	philo_eat(philo);
-	philo_leave_forks(philo);
-	philo_sleep(philo);
+	while (philo->times_eaten < philo->rules->times_each_must_eat)
+	{
+		philo_think(philo);
+		philo_take_forks(philo);
+		philo_eat(philo);
+		philo_leave_forks(philo);
+		philo_sleep(philo);
+	}
 	return (NULL);
 }
 
