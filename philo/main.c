@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:08:15 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/10 15:14:42 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/13 17:01:10 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,20 @@
 
 static void	data_destroy(t_data *data)
 {
+	t_uint	i;
+
 	if (data->philosophers)
 		free(data->philosophers);
 	if (data->forks)
+	{
+		i = 0;
+		while (i < data->count)
+		{
+			pthread_mutex_destroy(&data->forks[i]);
+			i++;
+		}
 		free(data->forks);
+	}
 }
 
 static void	philo_init(t_data *data, t_uint i)
@@ -46,9 +56,16 @@ static int	data_init(t_data *data, int argc, char *argv[])
 	data->philosophers = (t_philo *)malloc(data->count * sizeof(t_philo));
 	if (!data->philosophers)
 		return (-1);
-	data->forks = (char *)malloc(data->count * sizeof(char));
+	data->forks = (pthread_mutex_t *)malloc(data->count
+			* sizeof(pthread_mutex_t));
 	if (!data->forks)
 		return (-1);
+	i = 0;
+	while (i < data->count)
+	{
+		pthread_mutex_init(&data->forks[i], NULL);
+		i++;
+	}
 	i = 0;
 	while (i < data->count)
 	{

@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:08:24 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/10 15:14:27 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/13 17:01:16 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>	// malloc, free
 # include <string.h>	// memset
 # include <sys/time.h>	// gettimeofday
+# include <unistd.h>	// usleep
 
 typedef unsigned int	t_uint;
 
@@ -31,21 +32,21 @@ typedef struct s_rules
 
 typedef struct s_philo
 {
-	pthread_t	thread;
-	t_uint		number;
-	t_rules		*rules;
-	char		*fork_left;
-	char		*fork_right;
-	t_uint		times_eaten;
-	long		time_of_last_meal;
+	pthread_t		thread;
+	t_uint			number;
+	t_rules			*rules;
+	pthread_mutex_t	*fork_left;
+	pthread_mutex_t	*fork_right;
+	t_uint			times_eaten;
+	long			time_of_last_meal;
 }	t_philo;
 
 typedef struct s_data
 {
-	t_rules	rules;
-	t_uint	count;
-	t_philo	*philosophers;
-	char	*forks;
+	t_rules			rules;
+	t_uint			count;
+	t_philo			*philosophers;
+	pthread_mutex_t	*forks;
 }	t_data;
 
 int		ft_atoi(const char *nptr);
@@ -53,6 +54,14 @@ int		ft_atoi(const char *nptr);
 /* Threads */
 int		threads_create(t_data *data);
 void	threads_join(t_data *data);
+long	timestamp_get(void);
+
+/* Actions */
+void	philo_think(t_philo *philo);
+void	philo_take_forks(t_philo *philo);
+void	philo_eat(t_philo *philo);
+void	philo_leave_forks(t_philo *philo);
+void	philo_sleep(t_philo *philo);
 
 /* Debug */
 void	philo_print(t_philo *philo);

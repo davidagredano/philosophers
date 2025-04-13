@@ -6,13 +6,13 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:14:05 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/10 15:14:46 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/13 17:01:20 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static long	timestamp_get(void)
+long	timestamp_get(void)
 {
 	struct timeval	timeval;
 
@@ -27,7 +27,11 @@ static void	*routine(void *arg)
 
 	philo = (t_philo *)arg;
 	philo->time_of_last_meal = timestamp_get();
-	printf("%ld %d has started\n", philo->time_of_last_meal, philo->number);
+	philo_think(philo);
+	philo_take_forks(philo);
+	philo_eat(philo);
+	philo_leave_forks(philo);
+	philo_sleep(philo);
 	return (NULL);
 }
 
