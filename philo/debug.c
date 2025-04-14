@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:54:56 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/14 18:12:58 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/14 18:15:16 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,15 @@ void	data_print(t_data *data)
 		printf("forks[%d]: %p\n", i, &data->forks.arr[i]);
 		i++;
 	}
+}
+
+void	print_sizes(t_uint len)
+{
+	printf("t_data size: %lu\n", sizeof(t_data));
+	printf("t_philo size: %lu\n", sizeof(t_philo));
+	printf("pthread_t size: %lu\n", sizeof(pthread_t));
+	printf("pthread_mutex_t size: %lu\n", sizeof(pthread_mutex_t));
+	printf("data->forks.arr size: %lu\n", len * sizeof(t_mutex));
+	printf("data->philos.arr size: %lu\n", len * sizeof(t_philo));
+	printf("data->philos.mtx_arr size: %lu\n", len * sizeof(t_mutex));
 }

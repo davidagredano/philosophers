@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:08:24 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/14 15:03:27 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/14 18:15:19 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ int		ft_atoi(const char *nptr);
 /* Debug */
 void	philo_print(t_philo *philo);
 void	data_print(t_data *data);
+void	print_sizes(t_uint len);
 
 #endif
