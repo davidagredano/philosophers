@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:54:56 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/14 15:03:01 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/14 18:12:58 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	philo_print(t_philo *philo)
 	printf("  fork_left: %p\n", philo->fork_left);
 	printf("  fork_right: %p\n", philo->fork_right);
 	printf("  times_eaten: %d\n", philo->times_eaten);
-	printf("  time_of_last_meal: %ld\n", philo->time_of_last_meal);
+	printf("  time_of_last_meal: %ld\n", philo->last_meal_time);
 }
 
 void	data_print(t_data *data)

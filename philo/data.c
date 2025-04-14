@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:31:50 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/14 15:02:56 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/14 18:12:54 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ int	data_malloc(t_data *data, char *argv[])
 		return (-1);
 	data->philos.arr = (t_philo *)malloc(len * sizeof(t_philo));
 	if (!data->philos.arr)
+		return (-1);
+	data->philos.mtx_arr = (t_mutex *)malloc(len * sizeof(t_mutex));
+	if (!data->philos.mtx_arr)
 		return (-1);
 	return (0);
 }

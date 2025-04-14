@@ -39,13 +39,15 @@ typedef struct s_philo
 	t_mutex		*fork_left;
 	t_mutex		*fork_right;
 	t_uint		times_eaten;
-	long		time_of_last_meal;
+	long		last_meal_time;
+	t_mutex		*mutex;
 }	t_philo;
 
 typedef struct s_philos
 {
 	t_uint	len;
 	t_philo	*arr;
+	t_mutex	*mtx_arr;
 }	t_philos;
 
 typedef struct s_forks
