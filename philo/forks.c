@@ -1,44 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   forks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/10 10:08:15 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/14 15:03:08 by dagredan         ###   ########.fr       */
+/*   Created: 2025/04/14 14:43:19 by dagredan          #+#    #+#             */
+/*   Updated: 2025/04/14 15:03:04 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	arguments_validate(int argc)
+void	forks_init(t_data *data, t_uint len)
 {
-	if (argc < 5)
+	t_uint	i;
+
+	i = 0;
+	data->forks.len = len;
+	while (i < len)
 	{
-		printf("Too few arguments\n");
-		return (-1);
+		pthread_mutex_init(&data->forks.arr[i], NULL);
+		i++;
 	}
-	else if (argc > 6)
-	{
-		printf("Too many arguments\n");
-		return (-1);
-	}
-	return (0);
 }
 
-int	main(int argc, char *argv[])
+void	forks_free(t_data *data)
 {
-	t_data	data;
-
-	if (arguments_validate(argc) != 0)
-		return (EXIT_FAILURE);
-	if (data_malloc(&data, argv) != 0)
+	if (data->forks.arr)
 	{
-		data_free(&data);
-		return (EXIT_FAILURE);
+		free(data->forks.arr);
+		data->forks.arr = NULL;
 	}
-	data_init(&data, argc, argv);
-	data_cleanup(&data);
-	return (EXIT_SUCCESS);
+}
+
+void	forks_cleanup(t_data *data)
+{
+	t_uint	i;
+
+	if (data->forks.arr)
+	{
+		i = 0;
+		while (i < data->forks.len)
+		{
+			pthread_mutex_destroy(&data->forks.arr[i]);
+			i++;
+		}
+	}
+	forks_free(data);
 }

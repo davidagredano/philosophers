@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   threads.c                                          :+:      :+:    :+:   */
+/*   philos.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:14:05 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/13 17:01:20 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:03:11 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	timestamp_get(void)
-{
-	struct timeval	timeval;
-
-	if (gettimeofday(&timeval, NULL) != 0)
-		return (-1);
-	return ((timeval.tv_sec * 1000) + (timeval.tv_usec / 1000));
-}
-
-static void	*routine(void *arg)
+static void	*philo_routine(void *arg)
 {
 	t_philo			*philo;
 
@@ -38,36 +29,50 @@ static void	*routine(void *arg)
 	return (NULL);
 }
 
-int	threads_create(t_data *data)
+void	philos_init(t_data *data, t_uint len)
 {
 	t_uint	i;
+	t_philo	*curr_philo;
 
 	i = 0;
-	while (i < data->count)
+	data->philos.len = len;
+	while (i < len)
 	{
-		if (pthread_create(&data->philosophers[i].thread, NULL,
-				&routine, &data->philosophers[i]) != 0)
-		{
-			while (i > 0)
-			{
-				i--;
-				pthread_join(data->philosophers[i].thread, NULL);
-			}
-			return (-1);
-		}
+		curr_philo = &data->philos.arr[i];
+		memset(curr_philo, 0, sizeof(t_philo));
+		pthread_create(&curr_philo->thread, NULL, &philo_routine, curr_philo);
+		curr_philo->id = i + 1;
+		curr_philo->rules = &data->rules;
+		curr_philo->fork_left = &data->forks.arr[i];
+		if (i == len - 1)
+			curr_philo->fork_right = &data->forks.arr[0];
+		else
+			curr_philo->fork_right = &data->forks.arr[i + 1];
 		i++;
 	}
-	return (0);
 }
 
-void	threads_join(t_data *data)
+void	philos_free(t_data *data)
+{
+	if (data->philos.arr)
+	{
+		free(data->philos.arr);
+		data->philos.arr = NULL;
+	}
+}
+
+void	philos_cleanup(t_data *data)
 {
 	t_uint	i;
 
-	i = 0;
-	while (i < data->count)
+	if (data->philos.arr)
 	{
-		pthread_join(data->philosophers[i].thread, NULL);
-		i++;
+		i = 0;
+		while (i < data->philos.len)
+		{
+			pthread_join(data->philos.arr[i].thread, NULL);
+			i++;
+		}
 	}
+	philos_free(data);
 }

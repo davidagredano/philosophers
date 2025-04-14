@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:54:56 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/10 14:46:33 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:03:01 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	philo_print(t_philo *philo)
 {
-	printf("  number: %d\n", philo->number);
+	printf("  id: %d\n", philo->id);
 	printf("  rules: %p\n", philo->rules);
 	printf("  fork_left: %p\n", philo->fork_left);
 	printf("  fork_right: %p\n", philo->fork_right);
@@ -34,19 +34,19 @@ void	data_print(t_data *data)
 	printf("  rules.time_to_sleep: %d\n", rules.time_to_sleep);
 	if (rules.times_each_must_eat)
 		printf("  rules.times_each_must_eat: %d\n", rules.times_each_must_eat);
-	printf("  count: %d\n\n", data->count);
+	printf("  count: %d\n\n", data->philos.len);
 	i = 0;
-	while (i < data->count)
+	while (i < data->philos.len)
 	{
 		printf("philosophers[%d]:\n", i);
-		philo_print(&data->philosophers[i]);
+		philo_print(&data->philos.arr[i]);
 		printf("\n");
 		i++;
 	}
 	i = 0;
-	while (i < data->count)
+	while (i < data->forks.len)
 	{
-		printf("forks[%d]: %p\n", i, &data->forks[i]);
+		printf("forks[%d]: %p\n", i, &data->forks.arr[i]);
 		i++;
 	}
 }
