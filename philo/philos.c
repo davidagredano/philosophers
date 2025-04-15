@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:14:05 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/14 18:13:08 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/15 03:07:33 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@ static void	*philo_routine(void *arg)
 	t_philo			*philo;
 
 	philo = (t_philo *)arg;
+	while (!is_simulation_running(philo->rules))
+		usleep(100);
 	pthread_mutex_lock(philo->mutex);
 	philo->last_meal_time = timestamp_get();
 	pthread_mutex_unlock(philo->mutex);
-	while (philo->times_eaten < philo->rules->times_each_must_eat)
+	while (is_simulation_running(philo->rules))
 	{
 		philo_think(philo);
 		philo_take_forks(philo);

@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:31:50 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/14 18:12:54 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/15 03:07:19 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ int	data_malloc(t_data *data, char *argv[])
 
 	len = (t_uint)ft_atoi(argv[1]);
 	memset(data, 0, sizeof(t_data));
+	data->rules.mutex = (t_mutex *)malloc(sizeof(t_mutex));
+	if (!data->rules.mutex)
+		return (-1);
 	data->forks.arr = (t_mutex *)malloc(len * sizeof(t_mutex));
 	if (!data->forks.arr)
 		return (-1);
@@ -30,15 +33,6 @@ int	data_malloc(t_data *data, char *argv[])
 	return (0);
 }
 
-static void	rules_init(t_data *data, int argc, char *argv[])
-{
-	data->rules.time_to_die = ft_atoi(argv[2]);
-	data->rules.time_to_eat = ft_atoi(argv[3]);
-	data->rules.time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-		data->rules.times_each_must_eat = ft_atoi(argv[5]);
-}
-
 void	data_init(t_data *data, int argc, char *argv[])
 {
 	t_uint	len;
@@ -47,16 +41,20 @@ void	data_init(t_data *data, int argc, char *argv[])
 	rules_init(data, argc, argv);
 	forks_init(data, len);
 	philos_init(data, len);
+	death_init(data);
 }
 
 void	data_free(t_data *data)
 {
 	philos_free(data);
 	forks_free(data);
+	rules_free(data);
 }
 
 void	data_cleanup(t_data *data)
 {
+	death_cleanup(data);
 	philos_cleanup(data);
 	forks_cleanup(data);
+	rules_cleanup(data);
 }

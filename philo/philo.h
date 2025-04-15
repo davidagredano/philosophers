@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:08:24 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/14 18:15:19 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/15 03:07:28 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef struct s_rules
 	t_uint	time_to_eat;
 	t_uint	time_to_sleep;
 	t_uint	times_each_must_eat;
+	int		simulation_running;
+	t_mutex	*mutex;
 }	t_rules;
 
 typedef struct s_philo
@@ -61,6 +63,7 @@ typedef struct s_data
 	t_rules		rules;
 	t_forks		forks;
 	t_philos	philos;
+	pthread_t	death;
 }	t_data;
 
 /* Data */
@@ -68,6 +71,13 @@ int		data_malloc(t_data *data, char *argv[]);
 void	data_init(t_data *data, int argc, char *argv[]);
 void	data_free(t_data *data);
 void	data_cleanup(t_data *data);
+
+/* Rules */
+void	rules_init(t_data *data, int argc, char *argv[]);
+void	rules_free(t_data *data);
+void	rules_cleanup(t_data *data);
+int		is_simulation_running(t_rules *rules);
+void	set_simulation_running(t_rules *rules, int value);
 
 /* Forks */
 void	forks_init(t_data *data, t_uint len);
@@ -85,6 +95,10 @@ void	philo_take_forks(t_philo *philo);
 void	philo_eat(t_philo *philo);
 void	philo_leave_forks(t_philo *philo);
 void	philo_sleep(t_philo *philo);
+
+/* Death */
+void	death_init(t_data *data);
+void	death_cleanup(t_data *data);
 
 /* Time */
 long	timestamp_get(void);
