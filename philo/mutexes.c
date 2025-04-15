@@ -15,6 +15,7 @@
 void	mutexes_init(t_data *data)
 {
 	pthread_mutex_init(data->mutexes.rules, NULL);
+	pthread_mutex_init(data->mutexes.print, NULL);
 }
 
 void	mutexes_free(t_data *data)
@@ -24,11 +25,18 @@ void	mutexes_free(t_data *data)
 		free(data->mutexes.rules);
 		data->mutexes.rules = NULL;
 	}
+	if (data->mutexes.print)
+	{
+		free(data->mutexes.print);
+		data->mutexes.print = NULL;
+	}
 }
 
 void	mutexes_cleanup(t_data *data)
 {
 	if (data->mutexes.rules)
 		pthread_mutex_destroy(data->mutexes.rules);
+	if (data->mutexes.print)
+		pthread_mutex_destroy(data->mutexes.print);
 	mutexes_free(data);
 }

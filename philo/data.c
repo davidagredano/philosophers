@@ -21,6 +21,9 @@ int	data_malloc(t_data *data, char *argv[])
 	data->mutexes.rules = (t_mutex *)malloc(sizeof(t_mutex));
 	if (!data->mutexes.rules)
 		return (-1);
+	data->mutexes.print = (t_mutex *)malloc(sizeof(t_mutex));
+	if (!data->mutexes.print)
+		return (-1);
 	data->forks.arr = (t_mutex *)malloc(len * sizeof(t_mutex));
 	if (!data->forks.arr)
 		return (-1);

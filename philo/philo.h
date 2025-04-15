@@ -61,6 +61,7 @@ typedef struct s_rules
 typedef struct s_mutexes
 {
 	t_mutex	*rules;
+	t_mutex	*print;
 }	t_mutexes;
 
 struct s_data
