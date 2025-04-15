@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 23:39:23 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/15 15:45:27 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:18:40 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 static void	handle_death(t_philo *philo)
 {
-	pthread_mutex_lock(philo->rules->mutex);
-	if (philo->rules->simulation_running == 1)
+	pthread_mutex_lock(philo->data->mutexes.rules);
+	if (philo->data->rules.simulation_running == 1)
 	{
-		philo->rules->simulation_running = 0;
+		philo->data->rules.simulation_running = 0;
 		print_state_change(philo, "died");
 	}
-	pthread_mutex_unlock(philo->rules->mutex);
+	pthread_mutex_unlock(philo->data->mutexes.rules);
 }
 
 static int	philo_starved(t_philo *philo)
@@ -32,7 +32,7 @@ static int	philo_starved(t_philo *philo)
 	pthread_mutex_lock(philo->mutex);
 	time_since_last_meal = now - philo->last_meal_time;
 	pthread_mutex_unlock(philo->mutex);
-	return (time_since_last_meal > philo->rules->time_to_die);
+	return (time_since_last_meal > philo->data->rules.time_to_die);
 }
 
 static void	*death_routine(void *arg)
@@ -41,13 +41,13 @@ static void	*death_routine(void *arg)
 	t_uint	i;
 
 	data = (t_data *)arg;
-	while (!is_simulation_running(&data->rules))
+	while (!is_simulation_running(data))
 		usleep(1000);
-	while (is_simulation_running(&data->rules))
+	while (is_simulation_running(data))
 	{
 		usleep(1000);
 		i = 0;
-		while (is_simulation_running(&data->rules) && i < data->philos.len)
+		while (is_simulation_running(data) && i < data->philos.len)
 		{
 			if (philo_starved(&data->philos.arr[i]))
 			{

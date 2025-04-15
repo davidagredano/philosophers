@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:54:56 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/14 18:15:16 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:18:45 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 void	philo_print(t_philo *philo)
 {
+	printf("  data: %p\n", philo->data);
+	printf("  mutex: %p\n", philo->mutex);
 	printf("  id: %d\n", philo->id);
-	printf("  rules: %p\n", philo->rules);
 	printf("  fork_left: %p\n", philo->fork_left);
 	printf("  fork_right: %p\n", philo->fork_right);
 	printf("  times_eaten: %d\n", philo->times_eaten);

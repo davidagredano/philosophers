@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:08:24 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/15 03:07:28 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:19:08 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,18 @@
 
 typedef unsigned int	t_uint;
 typedef pthread_mutex_t	t_mutex;
-
-typedef struct s_rules
-{
-	t_uint	time_to_die;
-	t_uint	time_to_eat;
-	t_uint	time_to_sleep;
-	t_uint	times_each_must_eat;
-	int		simulation_running;
-	t_mutex	*mutex;
-}	t_rules;
+typedef struct s_data	t_data;
 
 typedef struct s_philo
 {
+	t_data		*data;
+	t_mutex		*mutex;
 	pthread_t	thread;
 	t_uint		id;
-	t_rules		*rules;
 	t_mutex		*fork_left;
 	t_mutex		*fork_right;
 	t_uint		times_eaten;
 	long		last_meal_time;
-	t_mutex		*mutex;
 }	t_philo;
 
 typedef struct s_philos
@@ -58,13 +49,28 @@ typedef struct s_forks
 	t_mutex	*arr;
 }	t_forks;
 
-typedef struct s_data
+typedef struct s_rules
 {
+	t_uint	time_to_die;
+	t_uint	time_to_eat;
+	t_uint	time_to_sleep;
+	t_uint	times_each_must_eat;
+	int		simulation_running;
+}	t_rules;
+
+typedef struct s_mutexes
+{
+	t_mutex	*rules;
+}	t_mutexes;
+
+struct s_data
+{
+	t_mutexes	mutexes;
 	t_rules		rules;
 	t_forks		forks;
 	t_philos	philos;
 	pthread_t	death;
-}	t_data;
+};
 
 /* Data */
 int		data_malloc(t_data *data, char *argv[]);
@@ -72,12 +78,15 @@ void	data_init(t_data *data, int argc, char *argv[]);
 void	data_free(t_data *data);
 void	data_cleanup(t_data *data);
 
+/* Mutexes */
+void	mutexes_init(t_data *data);
+void	mutexes_free(t_data *data);
+void	mutexes_cleanup(t_data *data);
+
 /* Rules */
 void	rules_init(t_data *data, int argc, char *argv[]);
-void	rules_free(t_data *data);
-void	rules_cleanup(t_data *data);
-int		is_simulation_running(t_rules *rules);
-void	set_simulation_running(t_rules *rules, int value);
+int		is_simulation_running(t_data *data);
+void	set_simulation_running(t_data *data, int value);
 
 /* Forks */
 void	forks_init(t_data *data, t_uint len);

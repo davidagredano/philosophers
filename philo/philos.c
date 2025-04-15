@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:14:05 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/15 03:07:33 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:19:52 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ static void	*philo_routine(void *arg)
 	t_philo			*philo;
 
 	philo = (t_philo *)arg;
-	while (!is_simulation_running(philo->rules))
+	while (!is_simulation_running(philo->data))
 		usleep(100);
 	pthread_mutex_lock(philo->mutex);
 	philo->last_meal_time = timestamp_get();
 	pthread_mutex_unlock(philo->mutex);
-	while (is_simulation_running(philo->rules))
+	while (is_simulation_running(philo->data))
 	{
 		philo_think(philo);
 		philo_take_forks(philo);
@@ -44,14 +44,14 @@ void	philos_init(t_data *data, t_uint len)
 	{
 		curr_philo = &data->philos.arr[i];
 		memset(curr_philo, 0, sizeof(t_philo));
+		curr_philo->data = data;
+		curr_philo->mutex = &data->philos.mtx_arr[i];
 		curr_philo->id = i + 1;
-		curr_philo->rules = &data->rules;
 		curr_philo->fork_left = &data->forks.arr[i];
 		if (i == len - 1)
 			curr_philo->fork_right = &data->forks.arr[0];
 		else
 			curr_philo->fork_right = &data->forks.arr[i + 1];
-		curr_philo->mutex = &data->philos.mtx_arr[i];
 		pthread_mutex_init(curr_philo->mutex, NULL);
 		pthread_create(&curr_philo->thread, NULL, &philo_routine, curr_philo);
 		i++;
