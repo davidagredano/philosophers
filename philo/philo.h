@@ -103,6 +103,9 @@ void	death_cleanup(t_data *data);
 /* Time */
 long	timestamp_get(void);
 
+/* Print */
+void	print_state_change(t_philo *philo, char *message);
+
 /* Utils */
 int		ft_atoi(const char *nptr);
 

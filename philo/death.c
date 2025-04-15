@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 23:39:23 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/15 03:07:22 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:45:27 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	handle_death(t_philo *philo)
 	if (philo->rules->simulation_running == 1)
 	{
 		philo->rules->simulation_running = 0;
-		printf("%ld %d died\n", timestamp_get(), philo->id);
+		print_state_change(philo, "died");
 	}
 	pthread_mutex_unlock(philo->rules->mutex);
 }

@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:44:25 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/14 18:12:48 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:45:16 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	philo_think(t_philo *philo)
 {
-	printf("%ld %d is thinking\n", timestamp_get(), philo->id);
+	print_state_change(philo, "is thinking");
 }
 
 void	philo_take_forks(t_philo *philo)
@@ -22,16 +22,16 @@ void	philo_take_forks(t_philo *philo)
 	if (philo->id % 2 == 1)
 	{
 		pthread_mutex_lock(philo->fork_right);
-		printf("%ld %d has taken a fork\n", timestamp_get(), philo->id);
+		print_state_change(philo, "has taken a fork");
 		pthread_mutex_lock(philo->fork_left);
-		printf("%ld %d has taken a fork\n", timestamp_get(), philo->id);
+		print_state_change(philo, "has taken a fork");
 	}
 	else
 	{
 		pthread_mutex_lock(philo->fork_left);
-		printf("%ld %d has taken a fork\n", timestamp_get(), philo->id);
+		print_state_change(philo, "has taken a fork");
 		pthread_mutex_lock(philo->fork_right);
-		printf("%ld %d has taken a fork\n", timestamp_get(), philo->id);
+		print_state_change(philo, "has taken a fork");
 	}
 }
 
@@ -39,7 +39,7 @@ void	philo_eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->mutex);
 	philo->last_meal_time = timestamp_get();
-	printf("%ld %d is eating\n", philo->last_meal_time, philo->id);
+	print_state_change(philo, "is eating");
 	pthread_mutex_unlock(philo->mutex);
 	usleep(philo->rules->time_to_eat * 1000);
 	philo->times_eaten++;
@@ -61,6 +61,6 @@ void	philo_leave_forks(t_philo *philo)
 
 void	philo_sleep(t_philo *philo)
 {
-	printf("%ld %d is sleeping\n", timestamp_get(), philo->id);
+	print_state_change(philo, "is sleeping");
 	usleep(philo->rules->time_to_sleep * 1000);
 }
