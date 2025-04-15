@@ -18,7 +18,9 @@ static void	handle_death(t_philo *philo)
 	if (philo->data->rules.simulation_running == 1)
 	{
 		philo->data->rules.simulation_running = 0;
-		print_state_change(philo, "died");
+		pthread_mutex_lock(philo->data->mutexes.print);
+		printf("%ld %d %s\n", timestamp_get(), philo->id, "died");
+		pthread_mutex_unlock(philo->data->mutexes.print);
 	}
 	pthread_mutex_unlock(philo->data->mutexes.rules);
 }

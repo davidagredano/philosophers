@@ -14,7 +14,12 @@
 
 void	print_state_change(t_philo *philo, char *message)
 {
-	pthread_mutex_lock(philo->data->mutexes.print);
-	printf("%ld %d %s\n", timestamp_get(), philo->id, message);
-	pthread_mutex_unlock(philo->data->mutexes.print);
+	pthread_mutex_lock(philo->data->mutexes.rules);
+	if (philo->data->rules.simulation_running == 1)
+	{
+		pthread_mutex_lock(philo->data->mutexes.print);
+		printf("%ld %d %s\n", timestamp_get(), philo->id, message);
+		pthread_mutex_unlock(philo->data->mutexes.print);
+	}
+	pthread_mutex_unlock(philo->data->mutexes.rules);
 }
