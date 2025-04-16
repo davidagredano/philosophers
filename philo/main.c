@@ -40,6 +40,7 @@ int	main(int argc, char *argv[])
 	}
 	data_init(&data, argc, argv);
 	set_simulation_running(&data, 1);
+	data.rules.simulation_start = get_current_time();
 	data_cleanup(&data);
 	return (EXIT_SUCCESS);
 }

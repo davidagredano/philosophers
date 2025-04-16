@@ -56,6 +56,7 @@ typedef struct s_rules
 	t_uint	time_to_sleep;
 	t_uint	times_each_must_eat;
 	int		simulation_running;
+	long	simulation_start;
 }	t_rules;
 
 typedef struct s_mutexes
@@ -111,7 +112,7 @@ void	death_init(t_data *data);
 void	death_cleanup(t_data *data);
 
 /* Time */
-long	timestamp_get(void);
+long	get_current_time(void);
 
 /* Print */
 void	print_state_change(t_philo *philo, char *message);

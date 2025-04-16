@@ -20,6 +20,7 @@ void	rules_init(t_data *data, int argc, char *argv[])
 	if (argc == 6)
 		data->rules.times_each_must_eat = ft_atoi(argv[5]);
 	set_simulation_running(data, 0);
+	data->rules.simulation_start = -1;
 }
 
 int	is_simulation_running(t_data *data)

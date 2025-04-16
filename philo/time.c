@@ -12,11 +12,11 @@
 
 #include "philo.h"
 
-long	timestamp_get(void)
+long	get_current_time(void)
 {
 	struct timeval	timeval;
 
 	if (gettimeofday(&timeval, NULL) != 0)
 		return (-1);
-	return ((timeval.tv_sec * 1000) + (timeval.tv_usec / 1000));
+	return ((timeval.tv_sec * 1000L) + (timeval.tv_usec / 1000L));
 }

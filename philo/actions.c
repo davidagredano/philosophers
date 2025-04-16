@@ -38,9 +38,9 @@ void	philo_take_forks(t_philo *philo)
 void	philo_eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->mutex);
-	philo->last_meal_time = timestamp_get();
-	print_state_change(philo, "is eating");
+	philo->last_meal_time = get_current_time();
 	pthread_mutex_unlock(philo->mutex);
+	print_state_change(philo, "is eating");
 	usleep(philo->data->rules.time_to_eat * 1000);
 	philo->times_eaten++;
 }

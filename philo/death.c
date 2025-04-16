@@ -14,12 +14,15 @@
 
 static void	handle_death(t_philo *philo)
 {
+	long	elapsed_time;
+
 	pthread_mutex_lock(philo->data->mutexes.rules);
 	if (philo->data->rules.simulation_running == 1)
 	{
 		philo->data->rules.simulation_running = 0;
 		pthread_mutex_lock(philo->data->mutexes.print);
-		printf("%ld %d %s\n", timestamp_get(), philo->id, "died");
+		elapsed_time = get_current_time() - philo->data->rules.simulation_start;
+		printf("%ld %d %s\n", elapsed_time, philo->id, "died");
 		pthread_mutex_unlock(philo->data->mutexes.print);
 	}
 	pthread_mutex_unlock(philo->data->mutexes.rules);
@@ -30,7 +33,7 @@ static int	philo_starved(t_philo *philo)
 	long	now;
 	long	time_since_last_meal;
 
-	now = timestamp_get();
+	now = get_current_time();
 	pthread_mutex_lock(philo->mutex);
 	time_since_last_meal = now - philo->last_meal_time;
 	pthread_mutex_unlock(philo->mutex);
