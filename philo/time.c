@@ -20,3 +20,26 @@ long	get_current_time(void)
 		return (-1);
 	return ((timeval.tv_sec * 1000L) + (timeval.tv_usec / 1000L));
 }
+
+static long	get_current_time_usec(void)
+{
+	struct timeval	timeval;
+
+	if (gettimeofday(&timeval, NULL) != 0)
+		return (-1);
+	return ((timeval.tv_sec * 1000000L) + timeval.tv_usec);
+}
+
+int	precise_usleep(t_uint usec)
+{
+	long	now;
+	long	end;
+
+	now = get_current_time_usec();
+	end = now + usec;
+	if (usec > SPINLOCK_THRESHOLD_USEC)
+		usleep(usec - SPINLOCK_THRESHOLD_USEC);
+	while (now < end)
+		now = get_current_time_usec();
+	return (0);
+}

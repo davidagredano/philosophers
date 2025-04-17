@@ -41,7 +41,7 @@ void	philo_eat(t_philo *philo)
 	philo->last_meal_time = get_current_time();
 	pthread_mutex_unlock(philo->mutex);
 	print_state_change(philo, "is eating");
-	usleep(philo->data->rules.time_to_eat * 1000);
+	precise_usleep(philo->data->rules.time_to_eat * 1000);
 	philo->times_eaten++;
 }
 
@@ -62,5 +62,5 @@ void	philo_leave_forks(t_philo *philo)
 void	philo_sleep(t_philo *philo)
 {
 	print_state_change(philo, "is sleeping");
-	usleep(philo->data->rules.time_to_sleep * 1000);
+	precise_usleep(philo->data->rules.time_to_sleep * 1000);
 }

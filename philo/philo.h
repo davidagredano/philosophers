@@ -20,6 +20,8 @@
 # include <sys/time.h>	// gettimeofday
 # include <unistd.h>	// usleep
 
+# define SPINLOCK_THRESHOLD_USEC 1000
+
 typedef unsigned int	t_uint;
 typedef pthread_mutex_t	t_mutex;
 typedef struct s_data	t_data;
@@ -113,6 +115,7 @@ void	death_cleanup(t_data *data);
 
 /* Time */
 long	get_current_time(void);
+int		precise_usleep(t_uint usec_goal);
 
 /* Print */
 void	print_state_change(t_philo *philo, char *message);

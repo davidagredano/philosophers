@@ -18,7 +18,7 @@ static void	*philo_routine(void *arg)
 
 	philo = (t_philo *)arg;
 	while (!is_simulation_running(philo->data))
-		usleep(100);
+		;
 	pthread_mutex_lock(philo->mutex);
 	philo->last_meal_time = get_current_time();
 	pthread_mutex_unlock(philo->mutex);
