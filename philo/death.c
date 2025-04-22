@@ -47,10 +47,10 @@ static void	*death_routine(void *arg)
 
 	data = (t_data *)arg;
 	while (!is_simulation_running(data))
-		usleep(1000);
+		;
+	precise_usleep(data->rules.time_to_die * 1000);
 	while (is_simulation_running(data))
 	{
-		usleep(1000);
 		i = 0;
 		while (is_simulation_running(data) && i < data->philos.len)
 		{
@@ -61,6 +61,7 @@ static void	*death_routine(void *arg)
 			}
 			i++;
 		}
+		usleep(2000);
 	}
 	return ((void *)0);
 }
