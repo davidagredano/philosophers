@@ -24,6 +24,10 @@ static void	*philo_routine(void *arg)
 	pthread_mutex_unlock(philo->mutex);
 	if (philo->data->philos.len % 2 == 0 && philo->id % 2 == 0)
 		precise_usleep(philo->data->rules.time_to_eat / 2 * 1000);
+	else if (philo->data->philos.len % 2 == 1 && philo->id % 3 == 1)
+		usleep(philo->data->rules.time_to_eat / 2 * 1000);
+	else if (philo->data->philos.len % 2 == 1 && philo->id % 3 == 2)
+		usleep(philo->data->rules.time_to_eat * 3 / 2 * 1000);
 	while (is_simulation_running(philo->data))
 	{
 		philo_think(philo);

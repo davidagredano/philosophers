@@ -15,6 +15,8 @@
 void	philo_think(t_philo *philo)
 {
 	print_state_change(philo, "is thinking");
+	if (philo->data->philos.len % 2 == 1 && philo->times_eaten > 0)
+		usleep(philo->data->rules.time_to_eat / 2 * 1000);
 }
 
 void	philo_take_forks(t_philo *philo)
