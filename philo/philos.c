@@ -22,6 +22,8 @@ static void	*philo_routine(void *arg)
 	pthread_mutex_lock(philo->mutex);
 	philo->last_meal_time = get_current_time();
 	pthread_mutex_unlock(philo->mutex);
+	if (philo->data->philos.len % 2 == 0 && philo->id % 2 == 0)
+		precise_usleep(philo->data->rules.time_to_eat / 2 * 1000);
 	while (is_simulation_running(philo->data))
 	{
 		philo_think(philo);

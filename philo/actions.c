@@ -19,20 +19,10 @@ void	philo_think(t_philo *philo)
 
 void	philo_take_forks(t_philo *philo)
 {
-	if (philo->id % 2 == 1)
-	{
-		pthread_mutex_lock(philo->fork_right);
-		print_state_change(philo, "has taken a fork");
-		pthread_mutex_lock(philo->fork_left);
-		print_state_change(philo, "has taken a fork");
-	}
-	else
-	{
-		pthread_mutex_lock(philo->fork_left);
-		print_state_change(philo, "has taken a fork");
-		pthread_mutex_lock(philo->fork_right);
-		print_state_change(philo, "has taken a fork");
-	}
+	pthread_mutex_lock(philo->fork_left);
+	print_state_change(philo, "has taken a fork");
+	pthread_mutex_lock(philo->fork_right);
+	print_state_change(philo, "has taken a fork");
 }
 
 void	philo_eat(t_philo *philo)
@@ -47,16 +37,8 @@ void	philo_eat(t_philo *philo)
 
 void	philo_leave_forks(t_philo *philo)
 {
-	if (philo->id % 2 == 1)
-	{
-		pthread_mutex_unlock(philo->fork_right);
-		pthread_mutex_unlock(philo->fork_left);
-	}
-	else
-	{
-		pthread_mutex_unlock(philo->fork_left);
-		pthread_mutex_unlock(philo->fork_right);
-	}
+	pthread_mutex_unlock(philo->fork_left);
+	pthread_mutex_unlock(philo->fork_right);
 }
 
 void	philo_sleep(t_philo *philo)
