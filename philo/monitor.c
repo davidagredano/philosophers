@@ -6,18 +6,11 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:40:36 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/23 19:00:10 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/23 19:45:57 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static void	handle_finish(t_data *data)
-{
-	pthread_mutex_lock(data->mutexes.rules);
-	data->rules.simulation_running = 0;
-	pthread_mutex_unlock(data->mutexes.rules);
-}
 
 static int	all_philos_finished(t_data *data)
 {
@@ -53,7 +46,7 @@ static void	*monitor_routine(void *arg)
 	{
 		if (all_philos_finished(data))
 		{
-			handle_finish(data);
+			set_simulation_running(data, 0);
 			return ((void *)0);
 		}
 		usleep(2000);
