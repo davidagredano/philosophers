@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:44:25 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/15 17:18:30 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/23 18:59:45 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,17 @@
 void	philo_think(t_philo *philo)
 {
 	print_state_change(philo, "is thinking");
-	if (philo->data->philos.len % 2 == 1 && philo->times_eaten > 0)
-		usleep(philo->data->rules.time_to_eat / 2 * 1000);
+	if (philo->data->philos.len % 2 == 1)
+	{
+		pthread_mutex_lock(philo->mutex);
+		if (philo->times_eaten > 0)
+		{
+			pthread_mutex_unlock(philo->mutex);
+			usleep(philo->data->rules.time_to_eat / 2 * 1000);
+		}
+		else
+			pthread_mutex_unlock(philo->mutex);
+	}
 }
 
 void	philo_take_forks(t_philo *philo)
@@ -34,7 +43,9 @@ void	philo_eat(t_philo *philo)
 	pthread_mutex_unlock(philo->mutex);
 	print_state_change(philo, "is eating");
 	precise_usleep(philo->data->rules.time_to_eat * 1000);
+	pthread_mutex_lock(philo->mutex);
 	philo->times_eaten++;
+	pthread_mutex_unlock(philo->mutex);
 }
 
 void	philo_leave_forks(t_philo *philo)

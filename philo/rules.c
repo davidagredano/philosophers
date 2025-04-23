@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 02:10:17 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/15 17:19:14 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/23 19:00:18 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	rules_init(t_data *data, int argc, char *argv[])
 	data->rules.time_to_eat = ft_atoi(argv[3]);
 	data->rules.time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		data->rules.times_each_must_eat = ft_atoi(argv[5]);
+		data->rules.meal_goal = ft_atoi(argv[5]);
 	set_simulation_running(data, 0);
 	data->rules.simulation_start = -1;
 }

@@ -7,7 +7,7 @@ RMDIR := rm -rf
 
 NAME := philo
 SRCS := main.c data.c mutexes.c rules.c forks.c philos.c actions.c death.c \
-		time.c print.c utils.c debug.c
+		monitor.c time.c print.c utils.c debug.c
 BUILD_DIR := build
 OBJS := $(SRCS:%.c=$(BUILD_DIR)/%.o)
 DEPS := $(SRCS:%.c=$(BUILD_DIR)/%.d)

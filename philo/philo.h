@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:08:24 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/15 17:19:08 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/23 19:00:13 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_philo
 	t_mutex		*fork_left;
 	t_mutex		*fork_right;
 	t_uint		times_eaten;
+	int			is_full;
 	long		last_meal_time;
 }	t_philo;
 
@@ -56,7 +57,7 @@ typedef struct s_rules
 	t_uint	time_to_die;
 	t_uint	time_to_eat;
 	t_uint	time_to_sleep;
-	t_uint	times_each_must_eat;
+	t_uint	meal_goal;
 	int		simulation_running;
 	long	simulation_start;
 }	t_rules;
@@ -74,6 +75,7 @@ struct s_data
 	t_forks		forks;
 	t_philos	philos;
 	pthread_t	death;
+	pthread_t	monitor;
 };
 
 /* Data */
@@ -112,6 +114,10 @@ void	philo_sleep(t_philo *philo);
 /* Death */
 void	death_init(t_data *data);
 void	death_cleanup(t_data *data);
+
+/* Monitor */
+void	monitor_init(t_data *data);
+void	monitor_cleanup(t_data *data);
 
 /* Time */
 long	get_current_time(void);

@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:31:50 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/15 17:18:37 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/23 18:59:54 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	data_init(t_data *data, int argc, char *argv[])
 	forks_init(data, len);
 	philos_init(data, len);
 	death_init(data);
+	monitor_init(data);
 }
 
 void	data_free(t_data *data)
@@ -57,6 +58,7 @@ void	data_free(t_data *data)
 
 void	data_cleanup(t_data *data)
 {
+	monitor_cleanup(data);
 	death_cleanup(data);
 	philos_cleanup(data);
 	forks_cleanup(data);

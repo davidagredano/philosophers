@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:54:56 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/15 17:18:45 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/23 19:00:06 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	data_print(t_data *data)
 	printf("  rules.time_to_die: %d\n", rules.time_to_die);
 	printf("  rules.time_to_eat: %d\n", rules.time_to_eat);
 	printf("  rules.time_to_sleep: %d\n", rules.time_to_sleep);
-	if (rules.times_each_must_eat)
-		printf("  rules.times_each_must_eat: %d\n", rules.times_each_must_eat);
+	if (rules.meal_goal)
+		printf("  rules.meal_goal: %d\n", rules.meal_goal);
 	printf("  count: %d\n\n", data->philos.len);
 	i = 0;
 	while (i < data->philos.len)
