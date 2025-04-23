@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:08:15 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/15 17:18:58 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/23 19:26:29 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int	main(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	}
 	data_init(&data, argc, argv);
-	set_simulation_running(&data, 1);
 	data.rules.simulation_start = get_current_time();
+	set_simulation_running(&data, 1);
 	data_cleanup(&data);
 	return (EXIT_SUCCESS);
 }
