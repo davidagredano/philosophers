@@ -6,15 +6,15 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:43:19 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/14 15:03:04 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/25 11:26:08 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	forks_init(t_data *data, t_uint len)
+void	forks_init(t_data *data, int len)
 {
-	t_uint	i;
+	int	i;
 
 	i = 0;
 	data->forks.len = len;
@@ -36,7 +36,7 @@ void	forks_free(t_data *data)
 
 void	forks_cleanup(t_data *data)
 {
-	t_uint	i;
+	int	i;
 
 	if (data->forks.arr)
 	{

@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 23:39:23 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/15 17:18:40 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/25 11:25:53 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	philo_starved(t_philo *philo)
 static void	*death_routine(void *arg)
 {
 	t_data	*data;
-	t_uint	i;
+	int		i;
 
 	data = (t_data *)arg;
 	while (!is_simulation_running(data))

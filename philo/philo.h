@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:08:24 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/25 10:23:45 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/25 11:26:16 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 
 # define SPINLOCK_THRESHOLD_USEC 1000
 
-typedef unsigned int	t_uint;
 typedef pthread_mutex_t	t_mutex;
 typedef struct s_data	t_data;
 
@@ -31,33 +30,33 @@ typedef struct s_philo
 	t_data		*data;
 	t_mutex		*mutex;
 	pthread_t	thread;
-	t_uint		id;
+	int			id;
 	t_mutex		*fork_left;
 	t_mutex		*fork_right;
-	t_uint		times_eaten;
+	int			times_eaten;
 	int			is_full;
 	long		last_meal_time;
 }	t_philo;
 
 typedef struct s_philos
 {
-	t_uint	len;
+	int		len;
 	t_philo	*arr;
 	t_mutex	*mtx_arr;
 }	t_philos;
 
 typedef struct s_forks
 {
-	t_uint	len;
+	int		len;
 	t_mutex	*arr;
 }	t_forks;
 
 typedef struct s_rules
 {
-	t_uint	time_to_die;
-	t_uint	time_to_eat;
-	t_uint	time_to_sleep;
-	t_uint	meal_goal;
+	int		time_to_die;
+	int		time_to_eat;
+	int		time_to_sleep;
+	int		meal_goal;
 	int		simulation_running;
 	long	simulation_start;
 }	t_rules;
@@ -95,12 +94,12 @@ int		is_simulation_running(t_data *data);
 void	set_simulation_running(t_data *data, int value);
 
 /* Forks */
-void	forks_init(t_data *data, t_uint len);
+void	forks_init(t_data *data, int len);
 void	forks_free(t_data *data);
 void	forks_cleanup(t_data *data);
 
 /* Philos */
-void	philos_init(t_data *data, t_uint len);
+void	philos_init(t_data *data, int len);
 void	philos_free(t_data *data);
 void	philos_cleanup(t_data *data);
 
@@ -121,7 +120,7 @@ void	monitor_cleanup(t_data *data);
 
 /* Time */
 long	get_current_time(void);
-int		precise_usleep(t_uint usec_goal);
+int		precise_usleep(int usec_goal);
 
 /* Print */
 void	print_state_change(t_philo *philo, char *message);
@@ -135,6 +134,6 @@ void	print_error(char *message);
 /* Debug */
 void	philo_print(t_philo *philo);
 void	data_print(t_data *data);
-void	print_sizes(t_uint len);
+void	print_sizes(int len);
 
 #endif

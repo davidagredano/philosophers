@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:40:36 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/23 19:45:57 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/25 11:26:14 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	all_philos_finished(t_data *data)
 {
-	t_uint	i;
 	t_philo	*philo;
+	int		i;
 
 	i = 0;
 	while (is_simulation_running(data) && i < data->philos.len)

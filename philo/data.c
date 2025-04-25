@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:31:50 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/23 18:59:54 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/25 11:25:58 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	data_malloc(t_data *data, char *argv[])
 {
-	t_uint	len;
+	int	len;
 
-	len = (t_uint)ft_atoi(argv[1]);
+	len = ft_atoi(argv[1]);
 	memset(data, 0, sizeof(t_data));
 	data->mutexes.rules = (t_mutex *)malloc(sizeof(t_mutex));
 	if (!data->mutexes.rules)
@@ -38,9 +38,9 @@ int	data_malloc(t_data *data, char *argv[])
 
 void	data_init(t_data *data, int argc, char *argv[])
 {
-	t_uint	len;
+	int	len;
 
-	len = (t_uint)ft_atoi(argv[1]);
+	len = ft_atoi(argv[1]);
 	mutexes_init(data);
 	rules_init(data, argc, argv);
 	forks_init(data, len);

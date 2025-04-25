@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:54:56 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/23 19:00:06 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/25 11:26:03 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	philo_print(t_philo *philo)
 void	data_print(t_data *data)
 {
 	t_rules	rules;
-	t_uint	i;
+	int		i;
 
 	rules = data->rules;
 	printf("\ndata:\n");
@@ -52,7 +52,7 @@ void	data_print(t_data *data)
 	}
 }
 
-void	print_sizes(t_uint len)
+void	print_sizes(int len)
 {
 	printf("t_data size: %lu\n", sizeof(t_data));
 	printf("t_philo size: %lu\n", sizeof(t_philo));

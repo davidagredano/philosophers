@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:14:05 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/15 17:19:52 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/25 11:26:19 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,27 @@ static void	*philo_routine(void *arg)
 	return (NULL);
 }
 
-void	philos_init(t_data *data, t_uint len)
+void	philos_init(t_data *data, int len)
 {
-	t_uint	i;
-	t_philo	*curr_philo;
+	t_philo	*philo;
+	int		i;
 
 	i = 0;
 	data->philos.len = len;
 	while (i < len)
 	{
-		curr_philo = &data->philos.arr[i];
-		memset(curr_philo, 0, sizeof(t_philo));
-		curr_philo->data = data;
-		curr_philo->mutex = &data->philos.mtx_arr[i];
-		curr_philo->id = i + 1;
-		curr_philo->fork_left = &data->forks.arr[i];
+		philo = &data->philos.arr[i];
+		memset(philo, 0, sizeof(t_philo));
+		philo->data = data;
+		philo->mutex = &data->philos.mtx_arr[i];
+		philo->id = i + 1;
+		philo->fork_left = &data->forks.arr[i];
 		if (i == len - 1)
-			curr_philo->fork_right = &data->forks.arr[0];
+			philo->fork_right = &data->forks.arr[0];
 		else
-			curr_philo->fork_right = &data->forks.arr[i + 1];
-		pthread_mutex_init(curr_philo->mutex, NULL);
-		pthread_create(&curr_philo->thread, NULL, &philo_routine, curr_philo);
+			philo->fork_right = &data->forks.arr[i + 1];
+		pthread_mutex_init(philo->mutex, NULL);
+		pthread_create(&philo->thread, NULL, &philo_routine, philo);
 		i++;
 	}
 }
@@ -77,7 +77,7 @@ void	philos_free(t_data *data)
 
 void	philos_cleanup(t_data *data)
 {
-	t_uint	i;
+	int	i;
 
 	if (data->philos.arr)
 	{
