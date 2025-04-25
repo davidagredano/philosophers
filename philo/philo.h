@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:08:24 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/23 19:00:13 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/25 10:23:45 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,10 @@ int		precise_usleep(t_uint usec_goal);
 void	print_state_change(t_philo *philo, char *message);
 
 /* Utils */
+size_t	ft_strlen(const char *s);
+int		ft_isdigit(int c);
 int		ft_atoi(const char *nptr);
+void	print_error(char *message);
 
 /* Debug */
 void	philo_print(t_philo *philo);
