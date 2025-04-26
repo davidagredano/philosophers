@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:44:25 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/23 18:59:45 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/26 12:02:57 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,18 @@ void	philo_think(t_philo *philo)
 	}
 }
 
-void	philo_take_forks(t_philo *philo)
+int	philo_take_forks(t_philo *philo)
 {
 	pthread_mutex_lock(philo->fork_left);
 	print_state_change(philo, "has taken a fork");
+	if (philo->fork_right == philo->fork_left)
+	{
+		pthread_mutex_unlock(philo->fork_left);
+		return (-1);
+	}
 	pthread_mutex_lock(philo->fork_right);
 	print_state_change(philo, "has taken a fork");
+	return (0);
 }
 
 void	philo_eat(t_philo *philo)

@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:08:24 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/25 11:26:16 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/26 12:03:00 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	philos_cleanup(t_data *data);
 
 /* Actions */
 void	philo_think(t_philo *philo);
-void	philo_take_forks(t_philo *philo);
+int		philo_take_forks(t_philo *philo);
 void	philo_eat(t_philo *philo);
 void	philo_leave_forks(t_philo *philo);
 void	philo_sleep(t_philo *philo);

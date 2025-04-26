@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:14:05 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/25 11:26:19 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/26 12:03:03 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static void	*philo_routine(void *arg)
 	while (is_simulation_running(philo->data))
 	{
 		philo_think(philo);
-		philo_take_forks(philo);
+		if (philo_take_forks(philo) == -1)
+			return (NULL);
 		philo_eat(philo);
 		philo_leave_forks(philo);
 		philo_sleep(philo);
