@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:08:24 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/26 12:03:00 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:13:21 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,9 @@ typedef struct s_rules
 	long	simulation_start;
 }	t_rules;
 
-typedef struct s_mutexes
-{
-	t_mutex	*rules;
-	t_mutex	*print;
-}	t_mutexes;
-
 struct s_data
 {
-	t_mutexes	mutexes;
+	t_mutex		*mutex;
 	t_rules		rules;
 	t_forks		forks;
 	t_philos	philos;
@@ -83,7 +77,7 @@ void	data_init(t_data *data, int argc, char *argv[]);
 void	data_free(t_data *data);
 void	data_cleanup(t_data *data);
 
-/* Mutexes */
+/* Mutex */
 void	mutexes_init(t_data *data);
 void	mutexes_free(t_data *data);
 void	mutexes_cleanup(t_data *data);

@@ -1,6 +1,6 @@
 CC := cc
-CFLAGS := -MMD -Wall -Wextra -Werror
-LDLIBS := -pthread
+CFLAGS := -MMD -Wall -Wextra -Werror #-fsanitize=thread -g
+LDLIBS := -pthread #-fsanitize=thread -g
 
 RM := rm -f
 RMDIR := rm -rf

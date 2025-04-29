@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:31:50 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/25 11:25:58 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:13:11 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,8 @@ int	data_malloc(t_data *data, char *argv[])
 
 	len = ft_atoi(argv[1]);
 	memset(data, 0, sizeof(t_data));
-	data->mutexes.rules = (t_mutex *)malloc(sizeof(t_mutex));
-	if (!data->mutexes.rules)
-		return (-1);
-	data->mutexes.print = (t_mutex *)malloc(sizeof(t_mutex));
-	if (!data->mutexes.print)
+	data->mutex = (t_mutex *)malloc(sizeof(t_mutex));
+	if (!data->mutex)
 		return (-1);
 	data->forks.arr = (t_mutex *)malloc(len * sizeof(t_mutex));
 	if (!data->forks.arr)
