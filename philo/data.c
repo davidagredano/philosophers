@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:31:50 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/29 19:08:02 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:28:08 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ static int	data_allocate(t_data *data, char *argv[])
 	int	len;
 
 	len = ft_atoi(argv[1]);
-	data->mutexes.global = (t_mutex *)malloc(sizeof(t_mutex));
-	if (!data->mutexes.global)
-		return (-1);
 	data->mutexes.forks = (t_mutex *)malloc(len * sizeof(t_mutex));
 	if (!data->mutexes.forks)
 		return (-1);
@@ -50,11 +47,6 @@ int	data_init(t_data *data, int argc, char *argv[])
 
 void	data_free(t_data *data)
 {
-	if (data->mutexes.global)
-	{
-		free(data->mutexes.global);
-		data->mutexes.global = NULL;
-	}
 	if (data->mutexes.forks)
 	{
 		free(data->mutexes.forks);

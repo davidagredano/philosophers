@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:12:21 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/29 19:08:18 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:28:13 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	mutexes_init(t_data *data)
 {
 	int	i;
 
-	pthread_mutex_init(data->mutexes.global, NULL);
+	pthread_mutex_init(&data->mutexes.global, NULL);
 	i = 0;
 	while (i < data->philos.len)
 	{
@@ -30,7 +30,7 @@ void	mutexes_destroy(t_data *data)
 {
 	int	i;
 
-	pthread_mutex_destroy(data->mutexes.global);
+	pthread_mutex_destroy(&data->mutexes.global);
 	i = 0;
 	while (i < data->philos.len)
 	{

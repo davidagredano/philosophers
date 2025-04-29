@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:08:24 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/29 19:08:20 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:28:15 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_philos
 
 typedef struct s_mutexes
 {
-	t_mutex	*global;
+	t_mutex	global;
 	t_mutex	*forks;
 	t_mutex	*philos;
 }	t_mutexes;
