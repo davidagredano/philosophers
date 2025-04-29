@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 15:19:41 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/29 19:08:24 by dagredan         ###   ########.fr       */
+/*   Created: 2025/04/29 16:57:16 by dagredan          #+#    #+#             */
+/*   Updated: 2025/04/29 19:08:27 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_state_change(t_philo *philo, char *message)
+void	threads_create(t_data *data)
 {
-	long	elapsed_time;
+	philos_create_threads(data);
+	death_create_thread(data);
+	monitor_create_thread(data);
+}
 
-	pthread_mutex_lock(philo->data->mutexes.global);
-	if (philo->data->rules.simulation_running == 1)
-	{
-		elapsed_time = get_current_time() - philo->data->rules.simulation_start;
-		printf("%ld %d %s\n", elapsed_time, philo->id, message);
-	}
-	pthread_mutex_unlock(philo->data->mutexes.global);
+void	threads_join(t_data *data)
+{
+	monitor_join_thread(data);
+	death_join_thread(data);
+	philos_join_threads(data);
 }

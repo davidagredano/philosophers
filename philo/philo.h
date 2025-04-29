@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:08:24 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/29 16:13:21 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:08:20 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ typedef struct s_philos
 {
 	int		len;
 	t_philo	*arr;
-	t_mutex	*mtx_arr;
 }	t_philos;
 
-typedef struct s_forks
+typedef struct s_mutexes
 {
-	int		len;
-	t_mutex	*arr;
-}	t_forks;
+	t_mutex	*global;
+	t_mutex	*forks;
+	t_mutex	*philos;
+}	t_mutexes;
 
 typedef struct s_rules
 {
@@ -63,39 +63,37 @@ typedef struct s_rules
 
 struct s_data
 {
-	t_mutex		*mutex;
 	t_rules		rules;
-	t_forks		forks;
+	t_mutexes	mutexes;
 	t_philos	philos;
 	pthread_t	death;
 	pthread_t	monitor;
 };
 
-/* Data */
-int		data_malloc(t_data *data, char *argv[]);
-void	data_init(t_data *data, int argc, char *argv[]);
-void	data_free(t_data *data);
-void	data_cleanup(t_data *data);
+/* Arguments */
+int		arguments_validate(int argc, char *argv[]);
 
-/* Mutex */
-void	mutexes_init(t_data *data);
-void	mutexes_free(t_data *data);
-void	mutexes_cleanup(t_data *data);
+/* Data */
+int		data_init(t_data *data, int argc, char *argv[]);
+void	data_free(t_data *data);
 
 /* Rules */
-void	rules_init(t_data *data, int argc, char *argv[]);
+void	rules_init_data(t_data *data, int argc, char *argv[]);
 int		is_simulation_running(t_data *data);
 void	set_simulation_running(t_data *data, int value);
 
-/* Forks */
-void	forks_init(t_data *data, int len);
-void	forks_free(t_data *data);
-void	forks_cleanup(t_data *data);
+/* Mutexes */
+void	mutexes_init(t_data *data);
+void	mutexes_destroy(t_data *data);
+
+/* Threads */
+void	threads_create(t_data *data);
+void	threads_join(t_data *data);
 
 /* Philos */
-void	philos_init(t_data *data, int len);
-void	philos_free(t_data *data);
-void	philos_cleanup(t_data *data);
+void	philos_init_data(t_data *data, int len);
+void	philos_create_threads(t_data *data);
+void	philos_join_threads(t_data *data);
 
 /* Actions */
 void	philo_think(t_philo *philo);
@@ -105,12 +103,12 @@ void	philo_leave_forks(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 
 /* Death */
-void	death_init(t_data *data);
-void	death_cleanup(t_data *data);
+void	death_create_thread(t_data *data);
+void	death_join_thread(t_data *data);
 
 /* Monitor */
-void	monitor_init(t_data *data);
-void	monitor_cleanup(t_data *data);
+void	monitor_create_thread(t_data *data);
+void	monitor_join_thread(t_data *data);
 
 /* Time */
 long	get_current_time(void);

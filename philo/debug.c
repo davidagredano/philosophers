@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:54:56 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/25 11:26:03 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:08:12 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,6 @@ void	data_print(t_data *data)
 		i++;
 	}
 	i = 0;
-	while (i < data->forks.len)
-	{
-		printf("forks[%d]: %p\n", i, &data->forks.arr[i]);
-		i++;
-	}
 }
 
 void	print_sizes(int len)

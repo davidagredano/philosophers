@@ -6,58 +6,68 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:31:50 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/29 16:13:11 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:08:02 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	data_malloc(t_data *data, char *argv[])
+static int	data_allocate(t_data *data, char *argv[])
 {
 	int	len;
 
 	len = ft_atoi(argv[1]);
-	memset(data, 0, sizeof(t_data));
-	data->mutex = (t_mutex *)malloc(sizeof(t_mutex));
-	if (!data->mutex)
+	data->mutexes.global = (t_mutex *)malloc(sizeof(t_mutex));
+	if (!data->mutexes.global)
 		return (-1);
-	data->forks.arr = (t_mutex *)malloc(len * sizeof(t_mutex));
-	if (!data->forks.arr)
+	data->mutexes.forks = (t_mutex *)malloc(len * sizeof(t_mutex));
+	if (!data->mutexes.forks)
+		return (-1);
+	data->mutexes.philos = (t_mutex *)malloc(len * sizeof(t_mutex));
+	if (!data->mutexes.philos)
 		return (-1);
 	data->philos.arr = (t_philo *)malloc(len * sizeof(t_philo));
 	if (!data->philos.arr)
 		return (-1);
-	data->philos.mtx_arr = (t_mutex *)malloc(len * sizeof(t_mutex));
-	if (!data->philos.mtx_arr)
-		return (-1);
 	return (0);
 }
 
-void	data_init(t_data *data, int argc, char *argv[])
+int	data_init(t_data *data, int argc, char *argv[])
 {
 	int	len;
 
+	memset(data, 0, sizeof(t_data));
+	if (data_allocate(data, argv) != 0)
+	{
+		data_free(data);
+		return (-1);
+	}
 	len = ft_atoi(argv[1]);
-	mutexes_init(data);
-	rules_init(data, argc, argv);
-	forks_init(data, len);
-	philos_init(data, len);
-	death_init(data);
-	monitor_init(data);
+	rules_init_data(data, argc, argv);
+	philos_init_data(data, len);
+	return (0);
 }
 
 void	data_free(t_data *data)
 {
-	philos_free(data);
-	forks_free(data);
-	mutexes_free(data);
-}
-
-void	data_cleanup(t_data *data)
-{
-	monitor_cleanup(data);
-	death_cleanup(data);
-	philos_cleanup(data);
-	forks_cleanup(data);
-	mutexes_cleanup(data);
+	if (data->mutexes.global)
+	{
+		free(data->mutexes.global);
+		data->mutexes.global = NULL;
+	}
+	if (data->mutexes.forks)
+	{
+		free(data->mutexes.forks);
+		data->mutexes.forks = NULL;
+	}
+	if (data->mutexes.philos)
+	{
+		free(data->mutexes.philos);
+		data->mutexes.philos = NULL;
+	}
+	if (data->philos.arr)
+	{
+		free(data->philos.arr);
+		data->philos.arr = NULL;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 23:39:23 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/29 16:13:15 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:08:09 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ static void	handle_death(t_philo *philo)
 {
 	long	elapsed_time;
 
-	pthread_mutex_lock(philo->data->mutex);
+	pthread_mutex_lock(philo->data->mutexes.global);
 	if (philo->data->rules.simulation_running == 1)
 	{
 		philo->data->rules.simulation_running = 0;
 		elapsed_time = get_current_time() - philo->data->rules.simulation_start;
 		printf("%ld %d %s\n", elapsed_time, philo->id, "died");
 	}
-	pthread_mutex_unlock(philo->data->mutex);
+	pthread_mutex_unlock(philo->data->mutexes.global);
 }
 
 static int	philo_starved(t_philo *philo)
@@ -64,12 +64,12 @@ static void	*death_routine(void *arg)
 	return ((void *)0);
 }
 
-void	death_init(t_data *data)
+void	death_create_thread(t_data *data)
 {
 	pthread_create(&data->death, NULL, &death_routine, data);
 }
 
-void	death_cleanup(t_data *data)
+void	death_join_thread(t_data *data)
 {
 	pthread_join(data->death, NULL);
 }

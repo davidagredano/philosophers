@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:40:36 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/25 11:26:14 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:08:17 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ static void	*monitor_routine(void *arg)
 	return ((void *)0);
 }
 
-void	monitor_init(t_data *data)
+void	monitor_create_thread(t_data *data)
 {
 	if (data->rules.meal_goal > 0)
 		pthread_create(&data->monitor, NULL, &monitor_routine, data);
 }
 
-void	monitor_cleanup(t_data *data)
+void	monitor_join_thread(t_data *data)
 {
 	if (data->rules.meal_goal > 0)
 		pthread_join(data->monitor, NULL);

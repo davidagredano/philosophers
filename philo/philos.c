@@ -6,11 +6,34 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:14:05 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/26 12:03:03 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:08:22 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	philos_init_data(t_data *data, int len)
+{
+	t_philo	*philo;
+	int		i;
+
+	i = 0;
+	data->philos.len = len;
+	while (i < len)
+	{
+		philo = &data->philos.arr[i];
+		memset(philo, 0, sizeof(t_philo));
+		philo->data = data;
+		philo->mutex = &data->mutexes.philos[i];
+		philo->id = i + 1;
+		philo->fork_left = &data->mutexes.forks[i];
+		if (i == len - 1)
+			philo->fork_right = &data->mutexes.forks[0];
+		else
+			philo->fork_right = &data->mutexes.forks[i + 1];
+		i++;
+	}
+}
 
 static void	*philo_routine(void *arg)
 {
@@ -40,43 +63,21 @@ static void	*philo_routine(void *arg)
 	return (NULL);
 }
 
-void	philos_init(t_data *data, int len)
+void	philos_create_threads(t_data *data)
 {
 	t_philo	*philo;
 	int		i;
 
 	i = 0;
-	data->philos.len = len;
-	while (i < len)
+	while (i < data->philos.len)
 	{
 		philo = &data->philos.arr[i];
-		memset(philo, 0, sizeof(t_philo));
-		philo->data = data;
-		philo->mutex = &data->philos.mtx_arr[i];
-		philo->id = i + 1;
-		philo->fork_left = &data->forks.arr[i];
-		if (i == len - 1)
-			philo->fork_right = &data->forks.arr[0];
-		else
-			philo->fork_right = &data->forks.arr[i + 1];
-		pthread_mutex_init(philo->mutex, NULL);
 		pthread_create(&philo->thread, NULL, &philo_routine, philo);
 		i++;
 	}
 }
 
-void	philos_free(t_data *data)
-{
-	if (data->philos.arr)
-	{
-		free(data->philos.arr);
-		data->philos.arr = NULL;
-		free(data->philos.mtx_arr);
-		data->philos.mtx_arr = NULL;
-	}
-}
-
-void	philos_cleanup(t_data *data)
+void	philos_join_threads(t_data *data)
 {
 	int	i;
 
@@ -86,9 +87,7 @@ void	philos_cleanup(t_data *data)
 		while (i < data->philos.len)
 		{
 			pthread_join(data->philos.arr[i].thread, NULL);
-			pthread_mutex_destroy(data->philos.arr[i].mutex);
 			i++;
 		}
 	}
-	philos_free(data);
 }
