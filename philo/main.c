@@ -27,8 +27,13 @@ static void	simulation_start(t_data *data)
 
 static int	program_init(t_data *data, int argc, char *argv[])
 {
-	if (data_init(data, argc, argv) != 0)
+	memset(data, 0, sizeof(t_data));
+	if (data_allocate(data, argv) != 0)
+	{
+		data_free(data);
 		return (-1);
+	}
+	data_init(data, argc, argv);
 	if (mutexes_init(data) != 0)
 	{
 		mutexes_destroy(data);

@@ -77,7 +77,8 @@ struct s_data
 int		arguments_validate(int argc, char *argv[]);
 
 /* Data */
-int		data_init(t_data *data, int argc, char *argv[]);
+int		data_allocate(t_data *data, char *argv[]);
+void	data_init(t_data *data, int argc, char *argv[]);
 void	data_free(t_data *data);
 
 /* Rules */

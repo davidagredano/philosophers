@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static int	data_allocate(t_data *data, char *argv[])
+int	data_allocate(t_data *data, char *argv[])
 {
 	int	len;
 
@@ -29,20 +29,13 @@ static int	data_allocate(t_data *data, char *argv[])
 	return (0);
 }
 
-int	data_init(t_data *data, int argc, char *argv[])
+void	data_init(t_data *data, int argc, char *argv[])
 {
 	int	len;
 
-	memset(data, 0, sizeof(t_data));
-	if (data_allocate(data, argv) != 0)
-	{
-		data_free(data);
-		return (-1);
-	}
 	len = ft_atoi(argv[1]);
 	rules_init_data(data, argc, argv);
 	philos_init_data(data, len);
-	return (0);
 }
 
 void	data_free(t_data *data)
