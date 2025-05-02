@@ -28,10 +28,7 @@ static void	simulation_start(t_data *data)
 static int	program_init(t_data *data, int argc, char *argv[])
 {
 	if (data_init(data, argc, argv) != 0)
-	{
-		data_free(data);
 		return (-1);
-	}
 	mutexes_init(data);
 	threads_create(data);
 	return (0);
