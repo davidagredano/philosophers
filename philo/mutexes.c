@@ -12,30 +12,53 @@
 
 #include "philo.h"
 
-void	mutexes_init(t_data *data)
+int	mutexes_init(t_data *data)
 {
 	int	i;
 
-	pthread_mutex_init(&data->mutexes.global, NULL);
+	if (pthread_mutex_init(&data->mutexes.global, NULL) != 0)
+		return (-1);
+	data->mutexes.global_initialized = 1;
 	i = 0;
 	while (i < data->philos.len)
 	{
-		pthread_mutex_init(&data->mutexes.forks[i], NULL);
-		pthread_mutex_init(&data->mutexes.philos[i], NULL);
+		if (pthread_mutex_init(&data->mutexes.forks[i], NULL) != 0)
+			return (-1);
+		data->mutexes.forks_initialized++;
 		i++;
 	}
+	i = 0;
+	while (i < data->philos.len)
+	{
+		if (pthread_mutex_init(&data->mutexes.philos[i], NULL) != 0)
+			return (-1);
+		data->mutexes.philos_initialized++;
+		i++;
+	}
+	return (0);
 }
 
 void	mutexes_destroy(t_data *data)
 {
 	int	i;
 
-	pthread_mutex_destroy(&data->mutexes.global);
+	if (data->mutexes.global_initialized == 1)
+	{
+		pthread_mutex_destroy(&data->mutexes.global);
+		data->mutexes.global_initialized = 0;
+	}
 	i = 0;
-	while (i < data->philos.len)
+	while (i < data->philos.len && data->mutexes.forks_initialized > 0)
 	{
 		pthread_mutex_destroy(&data->mutexes.forks[i]);
+		data->mutexes.forks_initialized--;
+		i++;
+	}
+	i = 0;
+	while (i < data->philos.len && data->mutexes.philos_initialized > 0)
+	{
 		pthread_mutex_destroy(&data->mutexes.philos[i]);
+		data->mutexes.philos_initialized--;
 		i++;
 	}
 }

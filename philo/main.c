@@ -29,7 +29,12 @@ static int	program_init(t_data *data, int argc, char *argv[])
 {
 	if (data_init(data, argc, argv) != 0)
 		return (-1);
-	mutexes_init(data);
+	if (mutexes_init(data) != 0)
+	{
+		mutexes_destroy(data);
+		data_free(data);
+		return (-1);
+	}
 	threads_create(data);
 	return (0);
 }

@@ -49,6 +49,9 @@ typedef struct s_mutexes
 	t_mutex	global;
 	t_mutex	*forks;
 	t_mutex	*philos;
+	int		global_initialized;
+	int		forks_initialized;
+	int		philos_initialized;
 }	t_mutexes;
 
 typedef struct s_rules
@@ -83,7 +86,7 @@ int		is_simulation_running(t_data *data);
 void	set_simulation_running(t_data *data, int value);
 
 /* Mutexes */
-void	mutexes_init(t_data *data);
+int		mutexes_init(t_data *data);
 void	mutexes_destroy(t_data *data);
 
 /* Threads */

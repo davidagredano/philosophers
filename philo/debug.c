@@ -58,6 +58,18 @@ void	print_mutexes(t_data *data)
 	printf("\n");
 }
 
+void	print_mutexes_init(t_data *data, char *message)
+{
+	t_mutexes	mutexes;
+
+	mutexes = data->mutexes;
+	printf("%s\n", message);
+	printf("mutexes.global_initialized: %d\n", mutexes.global_initialized);
+	printf("mutexes.forks_initialized: %d\n", mutexes.forks_initialized);
+	printf("mutexes.philos_initialized: %d\n", mutexes.philos_initialized);
+	printf("\n");
+}
+
 void	print_sizes(int len)
 {
 	printf("t_data size: %lu\n", sizeof(t_data));
