@@ -44,7 +44,18 @@ void	data_print(t_data *data)
 		printf("\n");
 		i++;
 	}
-	i = 0;
+}
+
+void	print_mutexes(t_data *data)
+{
+	t_mutexes	mutexes;
+
+	mutexes = data->mutexes;
+	printf("Mutexes:\n");
+	printf("  data.mutexes.global: %p\n", &mutexes.global);
+	printf("  data.mutexes.forks: %p\n", mutexes.forks);
+	printf("  data.mutexes.philos: %p\n", mutexes.philos);
+	printf("\n");
 }
 
 void	print_sizes(int len)
