@@ -18,7 +18,7 @@ static int	all_philos_finished(t_data *data)
 	int		i;
 
 	i = 0;
-	while (is_simulation_running(data) && i < data->philos.len)
+	while (get_simulation_state(data) == RUNNING && i < data->philos.len)
 	{
 		philo = &data->philos.arr[i];
 		if (!philo->is_full)
@@ -39,14 +39,14 @@ static void	*monitor_routine(void *arg)
 	t_data	*data;
 
 	data = (t_data *)arg;
-	while (!is_simulation_running(data))
+	while (get_simulation_state(data) == SETUP)
 		;
 	precise_usleep(data->rules.time_to_eat * 1000);
-	while (is_simulation_running(data))
+	while (get_simulation_state(data) == RUNNING)
 	{
 		if (all_philos_finished(data))
 		{
-			set_simulation_running(data, 0);
+			set_simulation_state(data, FINISHED);
 			return ((void *)0);
 		}
 		usleep(2000);

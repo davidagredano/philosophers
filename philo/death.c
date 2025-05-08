@@ -17,9 +17,9 @@ static void	handle_death(t_philo *philo)
 	long	elapsed_time;
 
 	pthread_mutex_lock(&philo->data->mutexes.global);
-	if (philo->data->rules.simulation_running == 1)
+	if (philo->data->rules.simulation_state == RUNNING)
 	{
-		philo->data->rules.simulation_running = 0;
+		philo->data->rules.simulation_state = FINISHED;
 		elapsed_time = get_current_time() - philo->data->rules.simulation_start;
 		printf("%ld %d %s\n", elapsed_time, philo->id, "died");
 	}
@@ -44,13 +44,13 @@ static void	*death_routine(void *arg)
 	int		i;
 
 	data = (t_data *)arg;
-	while (!is_simulation_running(data))
+	while (get_simulation_state(data) == SETUP)
 		;
 	precise_usleep(data->rules.time_to_die * 1000);
-	while (is_simulation_running(data))
+	while (get_simulation_state(data) == RUNNING)
 	{
 		i = 0;
-		while (is_simulation_running(data) && i < data->philos.len)
+		while (get_simulation_state(data) == RUNNING && i < data->philos.len)
 		{
 			if (philo_starved(&data->philos.arr[i]))
 			{

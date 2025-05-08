@@ -40,7 +40,7 @@ static void	*philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (!is_simulation_running(philo->data))
+	while (get_simulation_state(philo->data) == SETUP)
 		;
 	pthread_mutex_lock(philo->mutex);
 	philo->last_meal_time = get_current_time();
@@ -51,7 +51,7 @@ static void	*philo_routine(void *arg)
 		usleep(philo->data->rules.time_to_eat / 2 * 1000);
 	else if (philo->data->philos.len % 2 == 1 && philo->id % 3 == 2)
 		usleep(philo->data->rules.time_to_eat * 3 / 2 * 1000);
-	while (is_simulation_running(philo->data))
+	while (get_simulation_state(philo->data) == RUNNING)
 	{
 		philo_think(philo);
 		if (philo_take_forks(philo) == -1)

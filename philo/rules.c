@@ -21,19 +21,19 @@ void	rules_init_data(t_data *data, int argc, char *argv[])
 		data->rules.meal_goal = ft_atoi(argv[5]);
 }
 
-int	is_simulation_running(t_data *data)
+t_state	get_simulation_state(t_data *data)
 {
-	int	simulation_running;
+	t_state	simulation_state;
 
 	pthread_mutex_lock(&data->mutexes.global);
-	simulation_running = data->rules.simulation_running;
+	simulation_state = data->rules.simulation_state;
 	pthread_mutex_unlock(&data->mutexes.global);
-	return (simulation_running);
+	return (simulation_state);
 }
 
-void	set_simulation_running(t_data *data, int value)
+void	set_simulation_state(t_data *data, t_state value)
 {
 	pthread_mutex_lock(&data->mutexes.global);
-	data->rules.simulation_running = value;
+	data->rules.simulation_state = value;
 	pthread_mutex_unlock(&data->mutexes.global);
 }

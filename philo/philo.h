@@ -54,13 +54,20 @@ typedef struct s_mutexes
 	int		philos_initialized;
 }	t_mutexes;
 
+typedef enum e_state
+{
+	SETUP,
+	RUNNING,
+	FINISHED
+}	t_state;
+
 typedef struct s_rules
 {
 	int		time_to_die;
 	int		time_to_eat;
 	int		time_to_sleep;
 	int		meal_goal;
-	int		simulation_running;
+	t_state	simulation_state;
 	long	simulation_start;
 }	t_rules;
 
@@ -83,8 +90,8 @@ void	data_free(t_data *data);
 
 /* Rules */
 void	rules_init_data(t_data *data, int argc, char *argv[]);
-int		is_simulation_running(t_data *data);
-void	set_simulation_running(t_data *data, int value);
+t_state	get_simulation_state(t_data *data);
+void	set_simulation_state(t_data *data, t_state value);
 
 /* Mutexes */
 int		mutexes_init(t_data *data);

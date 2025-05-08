@@ -22,7 +22,7 @@ static void	program_cleanup(t_data *data)
 static void	simulation_start(t_data *data)
 {
 	data->rules.simulation_start = get_current_time();
-	set_simulation_running(data, 1);
+	set_simulation_state(data, RUNNING);
 }
 
 static int	program_init(t_data *data, int argc, char *argv[])
