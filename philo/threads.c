@@ -16,8 +16,10 @@ int	threads_create(t_data *data)
 {
 	if (philos_create_threads(data) != 0)
 		return (-1);
-	death_create_thread(data);
-	monitor_create_thread(data);
+	if (death_create_thread(data) != 0)
+		return (-1);
+	if (monitor_create_thread(data) != 0)
+		return (-1);
 	return (0);
 }
 

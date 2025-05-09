@@ -46,7 +46,8 @@ static void	*death_routine(void *arg)
 	data = (t_data *)arg;
 	while (get_simulation_state(data) == SETUP)
 		;
-	precise_usleep(data->rules.time_to_die * 1000);
+	if (get_simulation_state(data) == RUNNING)
+		precise_usleep(data->rules.time_to_die * 1000);
 	while (get_simulation_state(data) == RUNNING)
 	{
 		i = 0;
@@ -64,12 +65,16 @@ static void	*death_routine(void *arg)
 	return ((void *)0);
 }
 
-void	death_create_thread(t_data *data)
+int	death_create_thread(t_data *data)
 {
-	pthread_create(&data->death, NULL, &death_routine, data);
+	if (pthread_create(&data->death, NULL, &death_routine, data) != 0)
+		return (-1);
+	data->death_created = 1;
+	return (0);
 }
 
 void	death_join_thread(t_data *data)
 {
-	pthread_join(data->death, NULL);
+	if (data->death_created)
+		pthread_join(data->death, NULL);
 }

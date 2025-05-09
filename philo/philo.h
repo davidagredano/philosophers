@@ -79,6 +79,8 @@ struct s_data
 	t_philos	philos;
 	pthread_t	death;
 	pthread_t	monitor;
+	int			death_created;
+	int			monitor_created;
 };
 
 /* Arguments */
@@ -115,11 +117,11 @@ void	philo_eat(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 
 /* Death */
-void	death_create_thread(t_data *data);
+int		death_create_thread(t_data *data);
 void	death_join_thread(t_data *data);
 
 /* Monitor */
-void	monitor_create_thread(t_data *data);
+int		monitor_create_thread(t_data *data);
 void	monitor_join_thread(t_data *data);
 
 /* Time */

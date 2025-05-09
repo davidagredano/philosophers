@@ -41,7 +41,8 @@ static void	*monitor_routine(void *arg)
 	data = (t_data *)arg;
 	while (get_simulation_state(data) == SETUP)
 		;
-	precise_usleep(data->rules.time_to_eat * 1000);
+	if (get_simulation_state(data) == RUNNING)
+		precise_usleep(data->rules.time_to_eat * 1000);
 	while (get_simulation_state(data) == RUNNING)
 	{
 		if (all_philos_finished(data))
@@ -54,14 +55,19 @@ static void	*monitor_routine(void *arg)
 	return ((void *)0);
 }
 
-void	monitor_create_thread(t_data *data)
+int	monitor_create_thread(t_data *data)
 {
 	if (data->rules.meal_goal > 0)
-		pthread_create(&data->monitor, NULL, &monitor_routine, data);
+	{
+		if (pthread_create(&data->monitor, NULL, &monitor_routine, data) != 0)
+			return (-1);
+		data->monitor_created = 1;
+	}
+	return (0);
 }
 
 void	monitor_join_thread(t_data *data)
 {
-	if (data->rules.meal_goal > 0)
+	if (data->monitor_created)
 		pthread_join(data->monitor, NULL);
 }
