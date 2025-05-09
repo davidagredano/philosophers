@@ -14,6 +14,7 @@
 
 void	philo_initial_think(t_philo *philo)
 {
+	print_state_change(philo, "is thinking");
 	if (philo->data->philos.len % 2 == 0 && philo->id % 2 == 0)
 		precise_usleep(philo->data->rules.time_to_eat / 2 * 1000);
 	else if (philo->data->philos.len % 2 == 1 && philo->id % 3 == 1)
