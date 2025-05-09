@@ -52,12 +52,12 @@ static void	*philo_routine(void *arg)
 	while (get_simulation_state(philo->data) == RUNNING)
 	{
 		if (philo_take_forks(philo) == -1)
-			return (NULL);
+			return ((void *)0);
 		philo_eat(philo);
 		philo_sleep(philo);
 		philo_think(philo);
 	}
-	return (NULL);
+	return ((void *)0);
 }
 
 int	philos_create_threads(t_data *data)
