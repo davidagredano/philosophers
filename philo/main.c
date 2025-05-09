@@ -40,7 +40,14 @@ static int	program_init(t_data *data, int argc, char *argv[])
 		data_free(data);
 		return (-1);
 	}
-	threads_create(data);
+	if (threads_create(data) != 0)
+	{
+		set_simulation_state(data, FINISHED);
+		threads_join(data);
+		mutexes_destroy(data);
+		data_free(data);
+		return (-1);
+	}
 	return (0);
 }
 

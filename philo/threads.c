@@ -12,11 +12,13 @@
 
 #include "philo.h"
 
-void	threads_create(t_data *data)
+int	threads_create(t_data *data)
 {
-	philos_create_threads(data);
+	if (philos_create_threads(data) != 0)
+		return (-1);
 	death_create_thread(data);
 	monitor_create_thread(data);
+	return (0);
 }
 
 void	threads_join(t_data *data)

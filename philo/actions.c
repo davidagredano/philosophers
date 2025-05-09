@@ -12,20 +12,21 @@
 
 #include "philo.h"
 
+void	philo_initial_think(t_philo *philo)
+{
+	if (philo->data->philos.len % 2 == 0 && philo->id % 2 == 0)
+		precise_usleep(philo->data->rules.time_to_eat / 2 * 1000);
+	else if (philo->data->philos.len % 2 == 1 && philo->id % 3 == 1)
+		precise_usleep(philo->data->rules.time_to_eat / 2 * 1000);
+	else if (philo->data->philos.len % 2 == 1 && philo->id % 3 == 2)
+		precise_usleep(philo->data->rules.time_to_eat * 3 / 2 * 1000);
+}
+
 void	philo_think(t_philo *philo)
 {
 	print_state_change(philo, "is thinking");
 	if (philo->data->philos.len % 2 == 1)
-	{
-		pthread_mutex_lock(philo->mutex);
-		if (philo->times_eaten > 0)
-		{
-			pthread_mutex_unlock(philo->mutex);
-			usleep(philo->data->rules.time_to_eat / 2 * 1000);
-		}
-		else
-			pthread_mutex_unlock(philo->mutex);
-	}
+		precise_usleep(philo->data->rules.time_to_eat / 2 * 1000);
 }
 
 int	philo_take_forks(t_philo *philo)
@@ -52,10 +53,6 @@ void	philo_eat(t_philo *philo)
 	pthread_mutex_lock(philo->mutex);
 	philo->times_eaten++;
 	pthread_mutex_unlock(philo->mutex);
-}
-
-void	philo_leave_forks(t_philo *philo)
-{
 	pthread_mutex_unlock(philo->fork_left);
 	pthread_mutex_unlock(philo->fork_right);
 }

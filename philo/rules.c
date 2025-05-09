@@ -19,6 +19,7 @@ void	rules_init_data(t_data *data, int argc, char *argv[])
 	data->rules.time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data->rules.meal_goal = ft_atoi(argv[5]);
+	data->rules.simulation_state = SETUP;
 }
 
 t_state	get_simulation_state(t_data *data)

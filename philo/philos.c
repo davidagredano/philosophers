@@ -42,28 +42,25 @@ static void	*philo_routine(void *arg)
 	philo = (t_philo *)arg;
 	while (get_simulation_state(philo->data) == SETUP)
 		;
-	pthread_mutex_lock(philo->mutex);
-	philo->last_meal_time = get_current_time();
-	pthread_mutex_unlock(philo->mutex);
-	if (philo->data->philos.len % 2 == 0 && philo->id % 2 == 0)
-		precise_usleep(philo->data->rules.time_to_eat / 2 * 1000);
-	else if (philo->data->philos.len % 2 == 1 && philo->id % 3 == 1)
-		usleep(philo->data->rules.time_to_eat / 2 * 1000);
-	else if (philo->data->philos.len % 2 == 1 && philo->id % 3 == 2)
-		usleep(philo->data->rules.time_to_eat * 3 / 2 * 1000);
+	if (get_simulation_state(philo->data) == RUNNING)
+	{
+		pthread_mutex_lock(philo->mutex);
+		philo->last_meal_time = get_current_time();
+		pthread_mutex_unlock(philo->mutex);
+		philo_initial_think(philo);
+	}
 	while (get_simulation_state(philo->data) == RUNNING)
 	{
-		philo_think(philo);
 		if (philo_take_forks(philo) == -1)
 			return (NULL);
 		philo_eat(philo);
-		philo_leave_forks(philo);
 		philo_sleep(philo);
+		philo_think(philo);
 	}
 	return (NULL);
 }
 
-void	philos_create_threads(t_data *data)
+int	philos_create_threads(t_data *data)
 {
 	t_philo	*philo;
 	int		i;
@@ -72,9 +69,12 @@ void	philos_create_threads(t_data *data)
 	while (i < data->philos.len)
 	{
 		philo = &data->philos.arr[i];
-		pthread_create(&philo->thread, NULL, &philo_routine, philo);
+		if (pthread_create(&philo->thread, NULL, &philo_routine, philo) != 0)
+			return (-1);
+		philo->thread_created = 1;
 		i++;
 	}
+	return (0);
 }
 
 void	philos_join_threads(t_data *data)
@@ -86,7 +86,8 @@ void	philos_join_threads(t_data *data)
 		i = 0;
 		while (i < data->philos.len)
 		{
-			pthread_join(data->philos.arr[i].thread, NULL);
+			if (data->philos.arr[i].thread_created)
+				pthread_join(data->philos.arr[i].thread, NULL);
 			i++;
 		}
 	}

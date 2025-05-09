@@ -30,6 +30,7 @@ typedef struct s_philo
 	t_data		*data;
 	t_mutex		*mutex;
 	pthread_t	thread;
+	int			thread_created;
 	int			id;
 	t_mutex		*fork_left;
 	t_mutex		*fork_right;
@@ -98,19 +99,19 @@ int		mutexes_init(t_data *data);
 void	mutexes_destroy(t_data *data);
 
 /* Threads */
-void	threads_create(t_data *data);
+int		threads_create(t_data *data);
 void	threads_join(t_data *data);
 
 /* Philos */
 void	philos_init_data(t_data *data, int len);
-void	philos_create_threads(t_data *data);
+int		philos_create_threads(t_data *data);
 void	philos_join_threads(t_data *data);
 
 /* Actions */
+void	philo_initial_think(t_philo *philo);
 void	philo_think(t_philo *philo);
 int		philo_take_forks(t_philo *philo);
 void	philo_eat(t_philo *philo);
-void	philo_leave_forks(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 
 /* Death */
