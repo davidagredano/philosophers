@@ -94,7 +94,8 @@ void	data_free(t_data *data);
 /* Rules */
 void	rules_init_data(t_data *data, int argc, char *argv[]);
 t_state	get_simulation_state(t_data *data);
-void	set_simulation_state(t_data *data, t_state value);
+int		set_simulation_state(t_data *data, t_state value);
+void	simulation_finish(t_data *data);
 
 /* Mutexes */
 int		mutexes_init(t_data *data);
@@ -106,15 +107,16 @@ void	threads_join(t_data *data);
 
 /* Philos */
 void	philos_init_data(t_data *data, int len);
+int		philo_update_last_meal_time(t_philo *philo);
 int		philos_create_threads(t_data *data);
 void	philos_join_threads(t_data *data);
 
 /* Actions */
-void	philo_initial_think(t_philo *philo);
-void	philo_think(t_philo *philo);
+int		philo_initial_think(t_philo *philo);
+int		philo_think(t_philo *philo);
 int		philo_take_forks(t_philo *philo);
-void	philo_eat(t_philo *philo);
-void	philo_sleep(t_philo *philo);
+int		philo_eat(t_philo *philo);
+int		philo_sleep(t_philo *philo);
 
 /* Death */
 int		death_create_thread(t_data *data);
@@ -129,7 +131,7 @@ long	get_current_time(void);
 int		precise_usleep(int usec_goal);
 
 /* Print */
-void	print_state_change(t_philo *philo, char *message);
+int		print_state_change(t_philo *philo, char *message);
 
 /* Utils */
 size_t	ft_strlen(const char *s);

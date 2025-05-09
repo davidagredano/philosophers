@@ -36,10 +36,19 @@ int	precise_usleep(int usec)
 	long	end;
 
 	now = get_current_time_usec();
+	if (now < 0)
+		return (-1);
 	end = now + usec;
 	if (usec > SPINLOCK_THRESHOLD_USEC)
-		usleep(usec - SPINLOCK_THRESHOLD_USEC);
+	{
+		if (usleep(usec - SPINLOCK_THRESHOLD_USEC) != 0)
+			return (-1);
+	}
 	while (now < end)
+	{
 		now = get_current_time_usec();
+		if (now < 0)
+			return (-1);
+	}
 	return (0);
 }

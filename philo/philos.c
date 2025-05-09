@@ -35,6 +35,18 @@ void	philos_init_data(t_data *data, int len)
 	}
 }
 
+int	philo_update_last_meal_time(t_philo *philo)
+{
+	if (pthread_mutex_lock(philo->mutex) != 0)
+		return (-1);
+	philo->last_meal_time = get_current_time();
+	if (philo->last_meal_time < 0)
+		return (-1);
+	if (pthread_mutex_unlock(philo->mutex) != 0)
+		return (-1);
+	return (0);
+}
+
 static void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
@@ -44,20 +56,23 @@ static void	*philo_routine(void *arg)
 		;
 	if (get_simulation_state(philo->data) == RUNNING)
 	{
-		pthread_mutex_lock(philo->mutex);
-		philo->last_meal_time = get_current_time();
-		pthread_mutex_unlock(philo->mutex);
-		philo_initial_think(philo);
+		if (philo_update_last_meal_time(philo) != 0)
+			return (NULL);
+		if (philo_initial_think(philo) != 0)
+			return (NULL);
 	}
 	while (get_simulation_state(philo->data) == RUNNING)
 	{
-		if (philo_take_forks(philo) == -1)
-			return ((void *)0);
-		philo_eat(philo);
-		philo_sleep(philo);
-		philo_think(philo);
+		if (philo_take_forks(philo) != 0)
+			return (NULL);
+		if (philo_eat(philo) != 0)
+			return (NULL);
+		if (philo_sleep(philo) != 0)
+			return (NULL);
+		if (philo_think(philo) != 0)
+			return (NULL);
 	}
-	return ((void *)0);
+	return (NULL);
 }
 
 int	philos_create_threads(t_data *data)

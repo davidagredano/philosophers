@@ -26,15 +26,26 @@ t_state	get_simulation_state(t_data *data)
 {
 	t_state	simulation_state;
 
-	pthread_mutex_lock(&data->mutexes.global);
+	if (pthread_mutex_lock(&data->mutexes.global) != 0)
+		return (-1); // TODO
 	simulation_state = data->rules.simulation_state;
-	pthread_mutex_unlock(&data->mutexes.global);
+	if (pthread_mutex_unlock(&data->mutexes.global) != 0)
+		return (-1); // TODO
 	return (simulation_state);
 }
 
-void	set_simulation_state(t_data *data, t_state value)
+int	set_simulation_state(t_data *data, t_state value)
+{
+	if (pthread_mutex_lock(&data->mutexes.global) != 0)
+		return (-1); // TODO
+	data->rules.simulation_state = value;
+	if (pthread_mutex_unlock(&data->mutexes.global) != 0)
+		return (-1); // TODO
+}
+
+void	simulation_finish(t_data *data)
 {
 	pthread_mutex_lock(&data->mutexes.global);
-	data->rules.simulation_state = value;
+	data->rules.simulation_state = FINISHED;
 	pthread_mutex_unlock(&data->mutexes.global);
 }
