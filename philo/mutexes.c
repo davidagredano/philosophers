@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:12:21 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/10 19:27:11 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/10 22:46:23 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,23 @@ void	mutexes_destroy(t_data *data)
 
 	if (data->mutexes.global_initialized == 1)
 	{
-		pthread_mutex_destroy(&data->mutexes.global);
+		if (pthread_mutex_destroy(&data->mutexes.global) != 0)
+			print_error("pthread_mutex_destroy failed for mutexes.global");
 		data->mutexes.global_initialized = 0;
 	}
 	i = 0;
 	while (i < data->philos.len && data->mutexes.forks_initialized > 0)
 	{
-		pthread_mutex_destroy(&data->mutexes.forks[i]);
+		if (pthread_mutex_destroy(&data->mutexes.forks[i]) != 0)
+			print_error("pthread_mutex_destroy failed for a mutexes.forks");
 		data->mutexes.forks_initialized--;
 		i++;
 	}
 	i = 0;
 	while (i < data->philos.len && data->mutexes.philos_initialized > 0)
 	{
-		pthread_mutex_destroy(&data->mutexes.philos[i]);
+		if (pthread_mutex_destroy(&data->mutexes.philos[i]) != 0)
+			print_error("pthread_mutex_destroy failed for a mutexes.philos");
 		data->mutexes.philos_initialized--;
 		i++;
 	}
