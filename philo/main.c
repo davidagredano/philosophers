@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:08:15 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/29 19:08:15 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:07:57 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static int	program_init(t_data *data, int argc, char *argv[])
 	}
 	if (threads_create(data) != 0)
 	{
-		set_simulation_state(data, FINISHED);
 		threads_join(data);
 		mutexes_destroy(data);
 		data_free(data);

@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:14:05 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/29 19:08:22 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:08:07 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	philos_create_threads(t_data *data)
 	{
 		philo = &data->philos.arr[i];
 		if (pthread_create(&philo->thread, NULL, &philo_routine, philo) != 0)
-			return (-1);
+			return (error(data, "pthread_create", "philos_create_threads"));
 		philo->thread_created = 1;
 		i++;
 	}

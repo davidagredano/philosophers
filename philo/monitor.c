@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:40:36 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/29 19:08:17 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:08:04 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	monitor_create_thread(t_data *data)
 	if (data->rules.meal_goal > 0)
 	{
 		if (pthread_create(&data->monitor, NULL, &monitor_routine, data) != 0)
-			return (-1);
+			return (error(data, "pthread_create", "monitor_create_thread"));
 		data->monitor_created = 1;
 	}
 	return (0);

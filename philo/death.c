@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 23:39:23 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/29 19:28:10 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:07:51 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	*death_routine(void *arg)
 int	death_create_thread(t_data *data)
 {
 	if (pthread_create(&data->death, NULL, &death_routine, data) != 0)
-		return (-1);
+		return (error(data, "pthread_create", "death_create_thread"));
 	data->death_created = 1;
 	return (0);
 }
