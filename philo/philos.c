@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:14:05 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/10 19:23:26 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/10 22:35:39 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ void	philos_join_threads(t_data *data)
 		while (i < data->philos.len)
 		{
 			if (data->philos.arr[i].thread_created)
-				pthread_join(data->philos.arr[i].thread, NULL);
+				if (pthread_join(data->philos.arr[i].thread, NULL) != 0)
+					print_error("pthread_join failed in philos_join_threads");
 			i++;
 		}
 	}

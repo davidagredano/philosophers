@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 23:39:23 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/10 19:23:19 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/10 22:35:35 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ int	death_create_thread(t_data *data)
 void	death_join_thread(t_data *data)
 {
 	if (data->death_created)
-		pthread_join(data->death, NULL);
+		if (pthread_join(data->death, NULL) != 0)
+			print_error("pthread_join failed in death_join_thread");
 }
