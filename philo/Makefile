@@ -1,13 +1,13 @@
 CC := cc
-CFLAGS := -MMD -Wall -Wextra -Werror #-fsanitize=thread -g
-LDLIBS := -pthread #-fsanitize=thread -g
+CFLAGS := -MMD -Wall -Wextra -Werror
+LDLIBS := -pthread
 
 RM := rm -f
 RMDIR := rm -rf
 
 NAME := philo
 SRCS := main.c arguments.c data.c rules.c mutexes.c threads.c philos.c \
-		actions.c death.c monitor.c time.c print.c utils.c debug.c
+		actions.c death.c monitor.c time.c print.c utils.c
 BUILD_DIR := build
 OBJS := $(SRCS:%.c=$(BUILD_DIR)/%.o)
 DEPS := $(SRCS:%.c=$(BUILD_DIR)/%.d)

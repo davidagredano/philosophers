@@ -6,19 +6,19 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:08:24 by dagredan          #+#    #+#             */
-/*   Updated: 2025/05/10 19:23:24 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/11 00:55:09 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <pthread.h>	// pthread_t
-# include <stdio.h>		// printf
-# include <stdlib.h>	// malloc, free
-# include <string.h>	// memset
-# include <sys/time.h>	// gettimeofday
-# include <unistd.h>	// usleep
+# include <pthread.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/time.h>
+# include <unistd.h>
 
 # define SPINLOCK_THRESHOLD_USEC 1000
 
@@ -138,10 +138,5 @@ int		ft_isdigit(int c);
 int		ft_atoi(const char *nptr);
 void	print_error(char *message);
 int		error(t_data *data, char *syscall, char *func, int any_threads_created);
-
-/* Debug */
-void	philo_print(t_philo *philo);
-void	data_print(t_data *data);
-void	print_sizes(int len);
 
 #endif
