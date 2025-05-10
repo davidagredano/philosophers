@@ -48,11 +48,11 @@ static void	*monitor_routine(void *arg)
 		if (all_philos_finished(data))
 		{
 			set_simulation_state(data, FINISHED);
-			return ((void *)0);
+			return (NULL);
 		}
 		usleep(2000);
 	}
-	return ((void *)0);
+	return (NULL);
 }
 
 int	monitor_create_thread(t_data *data)

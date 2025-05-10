@@ -14,18 +14,17 @@
 
 int	print_state_change(t_philo *philo, char *message)
 {
-	long	current_time;
 	long	elapsed_time;
 
 	pthread_mutex_lock(&philo->data->mutexes.global);
 	if (philo->data->rules.simulation_state != FINISHED)
 	{
-		current_time = get_current_time();
-		if (current_time < 0)
-			return (-1);
-		elapsed_time = current_time - philo->data->rules.simulation_start;
+		elapsed_time = get_current_time() - philo->data->rules.simulation_start;
 		if (printf("%ld %d %s\n", elapsed_time, philo->id, message) < 0)
-			return (-1);
+		{
+			pthread_mutex_unlock(&philo->data->mutexes.global);
+			return (error(philo->data, "printf", "print_state_change"));
+		}
 	}
 	pthread_mutex_unlock(&philo->data->mutexes.global);
 	return (0);
