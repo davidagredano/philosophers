@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 16:44:25 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/26 12:02:57 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/11 00:06:11 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,30 @@
 
 int	philo_initial_think(t_philo *philo)
 {
-	if (philo_handle_state_change(philo, "is thinking") != 0)
-		return (-1);
-	if (philo->data->philos.len % 2 == 0 && philo->id % 2 == 0)
-		precise_usleep(philo->data->rules.time_to_eat / 2 * 1000);
-	else if (philo->data->philos.len % 2 == 1 && philo->id % 3 == 1)
-		precise_usleep(philo->data->rules.time_to_eat / 2 * 1000);
-	else if (philo->data->philos.len % 2 == 1 && philo->id % 3 == 2)
-		precise_usleep(philo->data->rules.time_to_eat * 3 / 2 * 1000);
+	if (philo->data->philos.len % 2 == 0)
+	{
+		if (philo->id % 2 == 0)
+		{
+			if (philo_handle_state_change(philo, "is thinking") != 0)
+				return (-1);
+			precise_usleep(philo->data->rules.time_to_eat / 2 * 1000);
+		}
+	}
+	else if (philo->data->philos.len % 2 == 1)
+	{
+		if (philo->id % 3 == 1)
+		{
+			if (philo_handle_state_change(philo, "is thinking") != 0)
+				return (-1);
+			precise_usleep(philo->data->rules.time_to_eat / 2 * 1000);
+		}
+		else if (philo->id % 3 == 2)
+		{
+			if (philo_handle_state_change(philo, "is thinking") != 0)
+				return (-1);
+			precise_usleep(philo->data->rules.time_to_eat * 3 / 2 * 1000);
+		}
+	}
 	return (0);
 }
 
