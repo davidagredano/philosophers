@@ -17,8 +17,7 @@ int	print_state_change(t_philo *philo, char *message)
 	long	current_time;
 	long	elapsed_time;
 
-	if (pthread_mutex_lock(&philo->data->mutexes.global) != 0)
-		return (-1);
+	pthread_mutex_lock(&philo->data->mutexes.global);
 	if (philo->data->rules.simulation_state != FINISHED)
 	{
 		current_time = get_current_time();
@@ -28,7 +27,6 @@ int	print_state_change(t_philo *philo, char *message)
 		if (printf("%ld %d %s\n", elapsed_time, philo->id, message) < 0)
 			return (-1);
 	}
-	if (pthread_mutex_unlock(&philo->data->mutexes.global) != 0)
-		return (-1);
+	pthread_mutex_unlock(&philo->data->mutexes.global);
 	return (0);
 }

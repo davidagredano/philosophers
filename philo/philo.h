@@ -94,8 +94,7 @@ void	data_free(t_data *data);
 /* Rules */
 void	rules_init_data(t_data *data, int argc, char *argv[]);
 t_state	get_simulation_state(t_data *data);
-int		set_simulation_state(t_data *data, t_state value);
-void	simulation_finish(t_data *data);
+void	set_simulation_state(t_data *data, t_state value);
 
 /* Mutexes */
 int		mutexes_init(t_data *data);

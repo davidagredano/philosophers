@@ -37,13 +37,11 @@ void	philos_init_data(t_data *data, int len)
 
 int	philo_update_last_meal_time(t_philo *philo)
 {
-	if (pthread_mutex_lock(philo->mutex) != 0)
-		return (-1);
+	pthread_mutex_lock(philo->mutex);
 	philo->last_meal_time = get_current_time();
 	if (philo->last_meal_time < 0)
 		return (-1);
-	if (pthread_mutex_unlock(philo->mutex) != 0)
-		return (-1);
+	pthread_mutex_unlock(philo->mutex);
 	return (0);
 }
 
