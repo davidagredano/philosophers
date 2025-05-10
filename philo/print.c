@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:19:41 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/29 19:28:17 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:23:29 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	philo_handle_state_change(t_philo *philo, char *message)
 		if (printf("%ld %d %s\n", elapsed_time, philo->id, message) < 0)
 		{
 			pthread_mutex_unlock(&philo->data->mutexes.global);
-			return (error(philo->data, "printf", "philo_handle_state_change"));
+			return (error(philo->data, "printf", "philo_handle_stt_change", 1));
 		}
 		if (ft_strcmp(message, "died") == 0)
 			philo->data->rules.simulation_state = FINISHED;
