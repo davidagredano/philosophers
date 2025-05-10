@@ -25,15 +25,6 @@ int	philo_initial_think(t_philo *philo)
 	return (0);
 }
 
-int	philo_think(t_philo *philo)
-{
-	if (print_state_change(philo, "is thinking") != 0)
-		return (-1);
-	if (philo->data->philos.len % 2 == 1)
-		precise_usleep(philo->data->rules.time_to_eat / 2 * 1000);
-	return (0);
-}
-
 int	philo_take_forks(t_philo *philo)
 {
 	pthread_mutex_lock(philo->fork_left);
@@ -69,5 +60,14 @@ int	philo_sleep(t_philo *philo)
 	if (print_state_change(philo, "is sleeping") != 0)
 		return (-1);
 	precise_usleep(philo->data->rules.time_to_sleep * 1000);
+	return (0);
+}
+
+int	philo_think(t_philo *philo)
+{
+	if (print_state_change(philo, "is thinking") != 0)
+		return (-1);
+	if (philo->data->philos.len % 2 == 1)
+		precise_usleep(philo->data->rules.time_to_eat / 2 * 1000);
 	return (0);
 }
