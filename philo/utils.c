@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:10:09 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/25 11:26:27 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/10 14:13:00 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,20 @@ void	print_error(char *message)
 	write(STDERR_FILENO, "Error: ", 7);
 	write(STDERR_FILENO, message, ft_strlen(message));
 	write(STDERR_FILENO, "\n", 1);
+}
+
+int	error(t_data *data, char *syscall, char *func)
+{
+	pthread_mutex_lock(&data->mutexes.global);
+	if (data->rules.simulation_state != FINISHED)
+	{
+		data->rules.simulation_state = FINISHED;
+		write(STDERR_FILENO, "Error: ", 7);
+		write(STDERR_FILENO, syscall, ft_strlen(syscall));
+		write(STDERR_FILENO, " failed in ", 11);
+		write(STDERR_FILENO, func, ft_strlen(func));
+		write(STDERR_FILENO, "\n", 1);
+	}
+	pthread_mutex_unlock(&data->mutexes.global);
+	return (-1);
 }

@@ -6,7 +6,7 @@
 /*   By: dagredan <dagredan@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:08:24 by dagredan          #+#    #+#             */
-/*   Updated: 2025/04/29 19:28:15 by dagredan         ###   ########.fr       */
+/*   Updated: 2025/05/10 14:18:40 by dagredan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ size_t	ft_strlen(const char *s);
 int		ft_isdigit(int c);
 int		ft_atoi(const char *nptr);
 void	print_error(char *message);
+int		error(t_data *data, char *syscall, char *func);
 
 /* Debug */
 void	philo_print(t_philo *philo);
