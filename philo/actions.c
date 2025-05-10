@@ -17,20 +17,11 @@ int	philo_initial_think(t_philo *philo)
 	if (print_state_change(philo, "is thinking") != 0)
 		return (-1);
 	if (philo->data->philos.len % 2 == 0 && philo->id % 2 == 0)
-	{
-		if (precise_usleep(philo->data->rules.time_to_eat / 2 * 1000) != 0)
-			return (-1);
-	}
+		precise_usleep(philo->data->rules.time_to_eat / 2 * 1000);
 	else if (philo->data->philos.len % 2 == 1 && philo->id % 3 == 1)
-	{
-		if (precise_usleep(philo->data->rules.time_to_eat / 2 * 1000) != 0)
-			return (-1);
-	}
+		precise_usleep(philo->data->rules.time_to_eat / 2 * 1000);
 	else if (philo->data->philos.len % 2 == 1 && philo->id % 3 == 2)
-	{
-		if (precise_usleep(philo->data->rules.time_to_eat * 3 / 2 * 1000) != 0)
-			return (-1);
-	}
+		precise_usleep(philo->data->rules.time_to_eat * 3 / 2 * 1000);
 	return (0);
 }
 
@@ -39,8 +30,7 @@ int	philo_think(t_philo *philo)
 	if (print_state_change(philo, "is thinking") != 0)
 		return (-1);
 	if (philo->data->philos.len % 2 == 1)
-		if (precise_usleep(philo->data->rules.time_to_eat / 2 * 1000) != 0)
-			return (-1);
+		precise_usleep(philo->data->rules.time_to_eat / 2 * 1000);
 	return (0);
 }
 
@@ -62,12 +52,10 @@ int	philo_take_forks(t_philo *philo)
 
 int	philo_eat(t_philo *philo)
 {
-	if (philo_update_last_meal_time(philo) != 0)
-		return (-1);
+	philo_update_last_meal_time(philo);
 	if (print_state_change(philo, "is eating") != 0)
 		return (-1);
-	if (precise_usleep(philo->data->rules.time_to_eat * 1000) != 0)
-		return (-1);
+	precise_usleep(philo->data->rules.time_to_eat * 1000);
 	pthread_mutex_lock(philo->mutex);
 	philo->times_eaten++;
 	pthread_mutex_unlock(philo->mutex);
@@ -80,7 +68,6 @@ int	philo_sleep(t_philo *philo)
 {
 	if (print_state_change(philo, "is sleeping") != 0)
 		return (-1);
-	if (precise_usleep(philo->data->rules.time_to_sleep * 1000) != 0)
-		return (-1);
+	precise_usleep(philo->data->rules.time_to_sleep * 1000);
 	return (0);
 }

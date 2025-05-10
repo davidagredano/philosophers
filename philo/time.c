@@ -16,8 +16,7 @@ long	get_current_time(void)
 {
 	struct timeval	timeval;
 
-	if (gettimeofday(&timeval, NULL) != 0)
-		return (-1);
+	gettimeofday(&timeval, NULL);
 	return ((timeval.tv_sec * 1000L) + (timeval.tv_usec / 1000L));
 }
 
@@ -25,30 +24,19 @@ static long	get_current_time_usec(void)
 {
 	struct timeval	timeval;
 
-	if (gettimeofday(&timeval, NULL) != 0)
-		return (-1);
+	gettimeofday(&timeval, NULL);
 	return ((timeval.tv_sec * 1000000L) + timeval.tv_usec);
 }
 
-int	precise_usleep(int usec)
+void	precise_usleep(int usec)
 {
 	long	now;
 	long	end;
 
 	now = get_current_time_usec();
-	if (now < 0)
-		return (-1);
 	end = now + usec;
 	if (usec > SPINLOCK_THRESHOLD_USEC)
-	{
-		if (usleep(usec - SPINLOCK_THRESHOLD_USEC) != 0)
-			return (-1);
-	}
+		usleep(usec - SPINLOCK_THRESHOLD_USEC);
 	while (now < end)
-	{
 		now = get_current_time_usec();
-		if (now < 0)
-			return (-1);
-	}
-	return (0);
 }

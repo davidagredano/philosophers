@@ -35,14 +35,11 @@ void	philos_init_data(t_data *data, int len)
 	}
 }
 
-int	philo_update_last_meal_time(t_philo *philo)
+void	philo_update_last_meal_time(t_philo *philo)
 {
 	pthread_mutex_lock(philo->mutex);
 	philo->last_meal_time = get_current_time();
-	if (philo->last_meal_time < 0)
-		return (-1);
 	pthread_mutex_unlock(philo->mutex);
-	return (0);
 }
 
 static void	*philo_routine(void *arg)
@@ -54,8 +51,7 @@ static void	*philo_routine(void *arg)
 		;
 	if (get_simulation_state(philo->data) == RUNNING)
 	{
-		if (philo_update_last_meal_time(philo) != 0)
-			return (NULL);
+		philo_update_last_meal_time(philo);
 		if (philo_initial_think(philo) != 0)
 			return (NULL);
 	}

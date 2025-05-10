@@ -106,7 +106,7 @@ void	threads_join(t_data *data);
 
 /* Philos */
 void	philos_init_data(t_data *data, int len);
-int		philo_update_last_meal_time(t_philo *philo);
+void	philo_update_last_meal_time(t_philo *philo);
 int		philos_create_threads(t_data *data);
 void	philos_join_threads(t_data *data);
 
@@ -127,7 +127,7 @@ void	monitor_join_thread(t_data *data);
 
 /* Time */
 long	get_current_time(void);
-int		precise_usleep(int usec_goal);
+void	precise_usleep(int usec_goal);
 
 /* Print */
 int		print_state_change(t_philo *philo, char *message);
