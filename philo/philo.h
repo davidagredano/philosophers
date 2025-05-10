@@ -130,7 +130,7 @@ long	get_current_time(void);
 void	precise_usleep(int usec_goal);
 
 /* Print */
-int		print_state_change(t_philo *philo, char *message);
+int		philo_handle_state_change(t_philo *philo, char *message);
 
 /* Utils */
 size_t	ft_strlen(const char *s);

@@ -14,7 +14,7 @@
 
 int	philo_initial_think(t_philo *philo)
 {
-	if (print_state_change(philo, "is thinking") != 0)
+	if (philo_handle_state_change(philo, "is thinking") != 0)
 		return (-1);
 	if (philo->data->philos.len % 2 == 0 && philo->id % 2 == 0)
 		precise_usleep(philo->data->rules.time_to_eat / 2 * 1000);
@@ -28,7 +28,7 @@ int	philo_initial_think(t_philo *philo)
 int	philo_take_forks(t_philo *philo)
 {
 	pthread_mutex_lock(philo->fork_left);
-	if (print_state_change(philo, "has taken a fork") != 0)
+	if (philo_handle_state_change(philo, "has taken a fork") != 0)
 	{
 		pthread_mutex_unlock(philo->fork_left);
 		return (-1);
@@ -39,7 +39,7 @@ int	philo_take_forks(t_philo *philo)
 		return (-1);
 	}
 	pthread_mutex_lock(philo->fork_right);
-	if (print_state_change(philo, "has taken a fork") != 0)
+	if (philo_handle_state_change(philo, "has taken a fork") != 0)
 	{
 		pthread_mutex_unlock(philo->fork_left);
 		pthread_mutex_unlock(philo->fork_right);
@@ -51,7 +51,7 @@ int	philo_take_forks(t_philo *philo)
 int	philo_eat(t_philo *philo)
 {
 	philo_update_last_meal_time(philo);
-	if (print_state_change(philo, "is eating") != 0)
+	if (philo_handle_state_change(philo, "is eating") != 0)
 	{
 		pthread_mutex_unlock(philo->fork_left);
 		pthread_mutex_unlock(philo->fork_right);
@@ -68,7 +68,7 @@ int	philo_eat(t_philo *philo)
 
 int	philo_sleep(t_philo *philo)
 {
-	if (print_state_change(philo, "is sleeping") != 0)
+	if (philo_handle_state_change(philo, "is sleeping") != 0)
 		return (-1);
 	precise_usleep(philo->data->rules.time_to_sleep * 1000);
 	return (0);
@@ -76,7 +76,7 @@ int	philo_sleep(t_philo *philo)
 
 int	philo_think(t_philo *philo)
 {
-	if (print_state_change(philo, "is thinking") != 0)
+	if (philo_handle_state_change(philo, "is thinking") != 0)
 		return (-1);
 	if (philo->data->philos.len % 2 == 1)
 		precise_usleep(philo->data->rules.time_to_eat / 2 * 1000);

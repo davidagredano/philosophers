@@ -12,7 +12,17 @@
 
 #include "philo.h"
 
-int	print_state_change(t_philo *philo, char *message)
+static int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] != '\0')
+		i++;
+	return ((unsigned char) s1[i] - (unsigned char) s2[i]);
+}
+
+int	philo_handle_state_change(t_philo *philo, char *message)
 {
 	long	elapsed_time;
 
@@ -23,8 +33,10 @@ int	print_state_change(t_philo *philo, char *message)
 		if (printf("%ld %d %s\n", elapsed_time, philo->id, message) < 0)
 		{
 			pthread_mutex_unlock(&philo->data->mutexes.global);
-			return (error(philo->data, "printf", "print_state_change"));
+			return (error(philo->data, "printf", "philo_handle_state_change"));
 		}
+		if (ft_strcmp(message, "died") == 0)
+			philo->data->rules.simulation_state = FINISHED;
 	}
 	pthread_mutex_unlock(&philo->data->mutexes.global);
 	return (0);

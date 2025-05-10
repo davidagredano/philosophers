@@ -12,25 +12,6 @@
 
 #include "philo.h"
 
-static int	handle_death(t_philo *philo)
-{
-	long	elapsed_time;
-
-	pthread_mutex_lock(&philo->data->mutexes.global);
-	if (philo->data->rules.simulation_state != FINISHED)
-	{
-		elapsed_time = get_current_time() - philo->data->rules.simulation_start;
-		if (printf("%ld %d %s\n", elapsed_time, philo->id, "died") < 0)
-		{
-			pthread_mutex_unlock(&philo->data->mutexes.global);
-			return (error(philo->data, "printf", "handle_death"));
-		}
-		philo->data->rules.simulation_state = FINISHED;
-	}
-	pthread_mutex_unlock(&philo->data->mutexes.global);
-	return (0);
-}
-
 static int	philo_starved(t_philo *philo)
 {
 	long	now;
@@ -60,7 +41,7 @@ static void	*death_routine(void *arg)
 		{
 			if (philo_starved(&data->philos.arr[i]))
 			{
-				handle_death(&data->philos.arr[i]);
+				philo_handle_state_change(&data->philos.arr[i], "died");
 				return (NULL);
 			}
 			i++;
